@@ -2845,18 +2845,89 @@
     return m + ':' + String(sec).padStart(2, '0');
   }
 
-  function timerFinished() {
-    try { if (navigator.vibrate) navigator.vibrate([300, 150, 300, 150, 300]); } catch (e) {}
+  // Shared audio context, primed on first user interaction so iOS doesn't block playback
+  let audioCtx = null;
+
+  function primeAudio() {
+    if (audioCtx) return;
     try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.frequency.value = 880;
-      gain.gain.setValueAtTime(0.3, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
-      osc.start();
-      osc.stop(ctx.currentTime + 1.2);
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      // Play a 1-sample silent buffer to unlock the context
+      const buffer = audioCtx.createBuffer(1, 1, 22050);
+      const source = audioCtx.createBufferSource();
+      source.buffer = buffer;
+      source.connect(audioCtx.destination);
+      source.start(0);
+    } catch (e) {}
+  }
+
+  ['touchstart', 'click', 'keydown'].forEach(evt => {
+    document.addEventListener(evt, primeAudio, { once: true, passive: true });
+  });
+
+  function playBell(ctx, freq, startTime, duration, volume) {
+    // Fundamental sine
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.type = 'sine';
+    osc1.frequency.value = freq;
+    osc1.connect(gain1);
+    gain1.connect(ctx.destination);
+    gain1.gain.setValueAtTime(0.0001, startTime);
+    gain1.gain.linearRampToValueAtTime(volume, startTime + 0.015);
+    gain1.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+    osc1.start(startTime);
+    osc1.stop(startTime + duration + 0.05);
+
+    // Warmth harmonic at 2.5x, quieter
+    const osc2 = ctx.createOscillator();
+    const gain2 = ctx.createGain();
+    osc2.type = 'sine';
+    osc2.frequency.value = freq * 2.5;
+    osc2.connect(gain2);
+    gain2.connect(ctx.destination);
+    gain2.gain.setValueAtTime(0.0001, startTime);
+    gain2.gain.linearRampToValueAtTime(volume * 0.35, startTime + 0.015);
+    gain2.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+    osc2.start(startTime);
+    osc2.stop(startTime + duration + 0.05);
+  }
+
+  function timerFinished() {
+    // Vibrate on Android (iOS Safari ignores this)
+    try { if (navigator.vibrate) navigator.vibrate([200, 100, 200]); } catch (e) {}
+
+    // Three descending bell notes (E5, C5, G4), overlapping, ringing out softly
+    try {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const ctx = audioCtx;
+      if (ctx.state === 'suspended') ctx.resume();
+
+      const now = ctx.currentTime;
+      playBell(ctx, 659, now + 0.00, 1.4, 0.35); // E5
+      playBell(ctx, 523, now + 0.55, 1.6, 0.35); // C5
+      playBell(ctx, 392, now + 1.10, 2.2, 0.35); // G4
+    } catch (e) {}
+
+    // Subtle visual pulse: flash body background twice over ~1.6s
+    try {
+      const body = document.body;
+      const originalBg = body.style.backgroundColor;
+      const originalTransition = body.style.transition;
+      const flashColor = 'rgba(107, 115, 65, 0.15)';
+
+      body.style.transition = 'background-color 0.4s ease';
+      body.style.backgroundColor = flashColor;
+
+      setTimeout(() => { body.style.backgroundColor = originalBg; }, 400);
+      setTimeout(() => { body.style.backgroundColor = flashColor; }, 800);
+      setTimeout(() => { body.style.backgroundColor = originalBg; }, 1200);
+      setTimeout(() => {
+        body.style.transition = originalTransition;
+        body.style.backgroundColor = originalBg;
+      }, 1700);
     } catch (e) {}
   }
 
