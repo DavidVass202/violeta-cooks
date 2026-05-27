@@ -124,7 +124,7 @@
   .brand::after {
     content: '';
     position: absolute;
-    right: 18px;
+    right: 52px;
     top: 22px;
     width: 22px;
     height: 22px;
@@ -1026,6 +1026,459 @@
     .shopping-list { columns: 1; }
   }
 
+  .mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 40;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    color: var(--ink);
+    font-size: 16px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(42, 31, 61, 0.12);
+    transition: all 0.2s;
+  }
+
+  .mobile-menu-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent-deep);
+  }
+
+  .mobile-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(42, 31, 61, 0.4);
+    z-index: 49;
+    backdrop-filter: blur(3px);
+  }
+
+  @media (max-width: 700px) {
+    .app,
+    .app.collapsed {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 280px;
+      max-width: 85vw;
+      z-index: 60;
+      transform: translateX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .app.collapsed .sidebar {
+      transform: translateX(-100%);
+    }
+
+    .app.collapsed .mobile-menu-btn {
+      display: flex;
+    }
+
+    .app:not(.collapsed) .mobile-backdrop {
+      display: block;
+    }
+
+    .recipe { padding: 28px 22px 80px; }
+  }
+
+  /* === Inline timer button === */
+  .timer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 100px;
+    padding: 2px 10px 2px 8px;
+    font-family: inherit;
+    font-size: 0.92em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    vertical-align: baseline;
+    margin: 0 2px;
+  }
+  .timer-btn:hover { background: var(--accent-deep); }
+  .timer-btn.running { background: var(--accent-deep); animation: pulse 2s ease-in-out infinite; }
+  .timer-btn.done { background: var(--sage); animation: none; }
+  .timer-btn::before { content: '⏱'; font-size: 0.85em; margin-right: 2px; }
+  .timer-btn.running::before { content: '■'; }
+  .timer-btn.done::before { content: '✓'; }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(157, 111, 199, 0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(157, 111, 199, 0); }
+  }
+
+  /* === Timer popover === */
+  .timer-popover {
+    position: fixed;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 16px 18px;
+    box-shadow: 0 12px 40px rgba(42, 31, 61, 0.2);
+    z-index: 600;
+    width: 240px;
+    display: none;
+  }
+  .timer-popover.show { display: block; }
+
+  .timer-popover-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    margin-bottom: 10px;
+  }
+
+  .timer-popover-fields {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .timer-popover-fields input {
+    width: 60px;
+    background: white;
+    border: 1px solid var(--line);
+    padding: 8px 6px;
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    color: var(--ink);
+    border-radius: 3px;
+    outline: none;
+    -moz-appearance: textfield;
+  }
+  .timer-popover-fields input::-webkit-outer-spin-button,
+  .timer-popover-fields input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .timer-popover-fields input:focus { border-color: var(--accent); }
+
+  .timer-popover-fields .colon {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink-faded);
+  }
+
+  .timer-popover-fields label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    text-align: center;
+    flex: 1;
+  }
+
+  .timer-popover-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .timer-popover-actions {
+    display: flex;
+    gap: 6px;
+  }
+  .timer-popover-actions button {
+    flex: 1;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .timer-popover-actions button:hover { background: var(--accent-deep); }
+  .timer-popover-actions button.secondary {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+  }
+  .timer-popover-actions button.secondary:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+    background: transparent;
+  }
+
+  /* === Floating active timers tray === */
+  .timer-tray {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 450;
+    max-width: 260px;
+  }
+
+  .timer-tray-item {
+    background: var(--accent);
+    color: white;
+    padding: 10px 14px;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 16px rgba(42, 31, 61, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .timer-tray-item:hover { background: var(--accent-deep); }
+  .timer-tray-item.done { background: var(--sage); animation: pulse 1s ease-in-out infinite; }
+  .timer-tray-label {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 11px;
+    opacity: 0.85;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .timer-tray-close {
+    background: rgba(255,255,255,0.25);
+    border: none;
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .timer-tray-close:hover { background: rgba(255,255,255,0.4); }
+
+  /* === "Start a timer" button === */
+  .timer-start-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  .timer-start-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent-deep);
+  }
+  .timer-start-btn::before { content: '⏱'; font-size: 11px; }
+
+  /* === Cook mode overlay === */
+  .cook-mode {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 500;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .cook-mode.active { display: flex; }
+
+  .cook-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-card);
+  }
+
+  .cook-title {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    font-style: italic;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0 14px;
+  }
+
+  .cook-close, .cook-wake {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .cook-close:hover, .cook-wake:hover {
+    border-color: var(--accent);
+    color: var(--accent-deep);
+  }
+  .cook-wake.on {
+    background: var(--sage);
+    color: white;
+    border-color: var(--sage);
+  }
+
+  .cook-progress {
+    height: 3px;
+    background: var(--line);
+    position: relative;
+  }
+  .cook-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .cook-step {
+    flex: 1;
+    overflow-y: auto;
+    padding: 48px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .cook-step-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    margin-bottom: 18px;
+  }
+
+  .cook-step-title {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    line-height: 1.05;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 28px;
+    max-width: 700px;
+  }
+
+  .cook-step-body {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 640px;
+  }
+
+  .cook-step-body strong {
+    color: var(--accent-deep);
+    font-weight: 600;
+  }
+
+  .cook-step-body .timer-btn {
+    font-size: 0.85em;
+    padding: 4px 14px 4px 12px;
+  }
+
+  .cook-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px 28px;
+    gap: 14px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--line);
+  }
+
+  .cook-nav-btn {
+    flex: 1;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 18px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  .cook-nav-btn:hover:not(:disabled) { background: var(--accent-deep); }
+  .cook-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .cook-nav-btn.secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .cook-nav-btn.secondary:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent-deep);
+    background: transparent;
+  }
+  .cook-nav-counter {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    min-width: 60px;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .cook-step { padding: 32px 22px; }
+    .cook-step-title { font-size: 32px; margin-bottom: 22px; }
+    .cook-step-body { font-size: 19px; }
+    .cook-nav-btn { padding: 16px 18px; font-size: 10px; }
+    .cook-header { padding: 14px 18px; }
+    .cook-title { font-size: 15px; }
+  }
+
   @media (max-width: 900px) {
     .recipe-body { grid-template-columns: 1fr; gap: 30px; }
     .recipe { padding: 36px 28px 80px; }
@@ -1041,6 +1494,9 @@
 <body>
 
 <div class="app" id="app">
+  <button class="mobile-menu-btn" id="mobileMenuBtn" title="Open menu" aria-label="Open menu">☰</button>
+  <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
   <aside class="sidebar">
     <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">‹</button>
 
@@ -1069,6 +1525,47 @@
   </aside>
 
   <main class="main" id="main"></main>
+</div>
+
+<div class="timer-popover" id="timerPopover">
+  <div class="timer-popover-label" id="timerPopoverLabel">Set timer</div>
+  <div class="timer-popover-fields">
+    <div class="timer-popover-field">
+      <input type="number" id="timerH" min="0" max="23" value="0">
+      <label>hr</label>
+    </div>
+    <span class="colon">:</span>
+    <div class="timer-popover-field">
+      <input type="number" id="timerM" min="0" max="59" value="0">
+      <label>min</label>
+    </div>
+    <span class="colon">:</span>
+    <div class="timer-popover-field">
+      <input type="number" id="timerS" min="0" max="59" value="0">
+      <label>sec</label>
+    </div>
+  </div>
+  <div class="timer-popover-actions">
+    <button class="secondary" onclick="closeTimerPopover()">Cancel</button>
+    <button onclick="confirmTimerStart()">Start</button>
+  </div>
+</div>
+
+<div class="timer-tray" id="timerTray"></div>
+
+<div class="cook-mode" id="cookMode">
+  <div class="cook-header">
+    <button class="cook-close" onclick="exitCookMode()" title="Exit">✕</button>
+    <div class="cook-title" id="cookTitle"></div>
+    <button class="cook-wake" id="cookWake" onclick="toggleWakeLock()" title="Keep screen on">☀</button>
+  </div>
+  <div class="cook-progress"><div class="cook-progress-fill" id="cookProgressFill"></div></div>
+  <div class="cook-step" id="cookStep"></div>
+  <div class="cook-nav">
+    <button class="cook-nav-btn secondary" id="cookPrev" onclick="cookStepChange(-1)">← Prev</button>
+    <div class="cook-nav-counter" id="cookCounter"></div>
+    <button class="cook-nav-btn" id="cookNext" onclick="cookStepChange(1)">Next →</button>
+  </div>
 </div>
 
 <div class="modal-bg" id="modal">
@@ -1447,38 +1944,36 @@
   let editingId = null;
   let sidebarCollapsed = false;
 
-  const SEED_VERSION = 2;
   const STORAGE_KEY = 'violeta-cooks-recipes';
-  const VERSION_KEY = 'violeta-cooks-seed-version';
+  const DELETED_SEEDS_KEY = 'violeta-cooks-deleted-seeds';
   const SIDEBAR_KEY = 'violeta-cooks-sidebar';
 
   async function loadRecipes() {
+    let saved = null;
     try {
-      const versionResult = await window.storage.get(VERSION_KEY);
-      const savedVersion = versionResult && versionResult.value ? parseInt(versionResult.value) : 0;
-
       const result = await window.storage.get(STORAGE_KEY);
-      if (result && result.value && savedVersion >= SEED_VERSION) {
-        recipes = JSON.parse(result.value);
-        return;
-      }
+      if (result && result.value) saved = JSON.parse(result.value);
+    } catch (e) {}
 
-      if (result && result.value) {
-        const existing = JSON.parse(result.value);
-        const seedIds = SEED_RECIPES.map(r => r.id);
-        const userAdded = existing.filter(r => !seedIds.includes(r.id));
-        recipes = [...SEED_RECIPES, ...userAdded];
-      } else {
-        recipes = SEED_RECIPES;
-      }
-    } catch (e) {
-      recipes = SEED_RECIPES;
+    let deletedSeeds = [];
+    try {
+      const result = await window.storage.get(DELETED_SEEDS_KEY);
+      if (result && result.value) deletedSeeds = JSON.parse(result.value);
+    } catch (e) {}
+
+    if (saved === null) {
+      // First load: use all seeds
+      recipes = [...SEED_RECIPES];
+    } else {
+      // Returning user: keep their data exactly as is, only add seed recipes they've never seen
+      const savedIds = new Set(saved.map(r => r.id));
+      const deletedSet = new Set(deletedSeeds);
+      const newSeeds = SEED_RECIPES.filter(r => !savedIds.has(r.id) && !deletedSet.has(r.id));
+      recipes = [...saved, ...newSeeds];
     }
     await saveAllRecipes();
-    try {
-      await window.storage.set(VERSION_KEY, String(SEED_VERSION));
-    } catch (e) {}
   }
+
 
   async function saveAllRecipes() {
     try {
@@ -1493,8 +1988,13 @@
       const result = await window.storage.get(SIDEBAR_KEY);
       if (result && result.value) {
         sidebarCollapsed = result.value === 'true';
+        return;
       }
     } catch (e) {}
+    // First-time default: collapsed on mobile so the recipe is visible
+    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 700px)').matches) {
+      sidebarCollapsed = true;
+    }
   }
 
   async function saveSidebarState() {
@@ -1598,7 +2098,7 @@
       <div class="step">
         <span class="step-num">${String(i + 1).padStart(2, '0')}</span>
         <div class="step-title">${step.title}</div>
-        <div class="step-body">${step.body}</div>
+        <div class="step-body">${injectTimers(step.body)}</div>
       </div>
     `).join('');
 
@@ -1643,6 +2143,7 @@
       <article class="recipe">
         <div class="recipe-header">
           <div class="recipe-actions">
+            <button class="icon-btn" onclick="enterCookMode('${recipe.id}')" title="Cook mode">▶</button>
             <button class="icon-btn" onclick="editRecipe('${recipe.id}')" title="Edit">✎</button>
           </div>
           <div class="recipe-eyebrow">Recipe № ${String(recipes.findIndex(r => r.id === recipe.id) + 1).padStart(2, '0')}</div>
@@ -1682,7 +2183,10 @@
             ${ingredientsHTML}
           </section>
           <section>
-            <div class="section-heading">Method <span class="count">${String(recipe.method.length).padStart(2, '0')} steps</span></div>
+            <div class="section-heading">
+              <span>Method <span class="count">${String(recipe.method.length).padStart(2, '0')} steps</span></span>
+              <button class="timer-start-btn" onclick="openTimerPopover(this, null, 0)">Start a timer</button>
+            </div>
             ${methodHTML}
           </section>
         </div>
@@ -1776,6 +2280,12 @@
     activeId = id;
     const r = recipes.find(x => x.id === id);
     activeServings = r.servings;
+    // Auto-close sidebar on mobile so the recipe is visible
+    if (window.matchMedia && window.matchMedia('(max-width: 700px)').matches && !sidebarCollapsed) {
+      sidebarCollapsed = true;
+      applySidebarState();
+      saveSidebarState();
+    }
     renderSidebar();
     renderMain();
   }
@@ -1797,6 +2307,18 @@
 
   document.getElementById('sidebarToggle').addEventListener('click', async () => {
     sidebarCollapsed = !sidebarCollapsed;
+    applySidebarState();
+    await saveSidebarState();
+  });
+
+  document.getElementById('mobileMenuBtn').addEventListener('click', async () => {
+    sidebarCollapsed = false;
+    applySidebarState();
+    await saveSidebarState();
+  });
+
+  document.getElementById('mobileBackdrop').addEventListener('click', async () => {
+    sidebarCollapsed = true;
     applySidebarState();
     await saveSidebarState();
   });
@@ -1856,7 +2378,23 @@
   async function deleteRecipe() {
     if (!editingId) return;
     if (!confirm('Delete this recipe?')) return;
+
+    const isSeed = SEED_RECIPES.some(s => s.id === editingId);
+
     recipes = recipes.filter(r => r.id !== editingId);
+
+    if (isSeed) {
+      let deletedSeeds = [];
+      try {
+        const result = await window.storage.get(DELETED_SEEDS_KEY);
+        if (result && result.value) deletedSeeds = JSON.parse(result.value);
+      } catch (e) {}
+      if (!deletedSeeds.includes(editingId)) {
+        deletedSeeds.push(editingId);
+        try { await window.storage.set(DELETED_SEEDS_KEY, JSON.stringify(deletedSeeds)); } catch (e) {}
+      }
+    }
+
     if (activeId === editingId) {
       activeId = recipes[0]?.id || null;
       activeServings = recipes[0]?.servings || 4;
@@ -2113,6 +2651,275 @@
     result.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
     return result;
   }
+
+  // === Inline timers ===
+  const TIMER_REGEX = /\b(\d+)(?:\s*(?:to|-|–)\s*(\d+))?\s*(hours?|hrs?|h|minutes?|mins?|m|seconds?|secs?|s)\b/gi;
+
+  function toSeconds(value, unit) {
+    const u = unit.toLowerCase();
+    if (/^h/.test(u)) return value * 3600;
+    if (/^m/.test(u) && !/^ms/.test(u)) return value * 60;
+    return value;
+  }
+
+  function injectTimers(text) {
+    return text.replace(TIMER_REGEX, function(match, a, b, unit) {
+      const targetVal = b ? parseInt(b) : parseInt(a);
+      const seconds = toSeconds(targetVal, unit);
+      if (seconds < 30) return match;
+      const safeLabel = match.replace(/"/g, '&quot;');
+      return '<button class="timer-btn" data-seconds="' + seconds + '" data-label="' + safeLabel + '" onclick="openTimerPopover(this, \'' + safeLabel + '\', ' + seconds + ')">' + match + '</button>';
+    });
+  }
+
+  const activeTimers = {};
+  let timerCounter = 0;
+  let pendingTimer = null;
+
+  function openTimerPopover(sourceBtn, label, defaultSeconds) {
+    pendingTimer = { sourceBtn: sourceBtn, label: label || 'Timer' };
+
+    document.getElementById('timerPopoverLabel').textContent = label ? ('Timer: ' + label) : 'Set timer';
+    const h = Math.floor(defaultSeconds / 3600);
+    const m = Math.floor((defaultSeconds % 3600) / 60);
+    const s = defaultSeconds % 60;
+    document.getElementById('timerH').value = h;
+    document.getElementById('timerM').value = m;
+    document.getElementById('timerS').value = s;
+
+    const pop = document.getElementById('timerPopover');
+    pop.classList.add('show');
+
+    const rect = sourceBtn.getBoundingClientRect();
+    const popRect = pop.getBoundingClientRect();
+    let top = rect.bottom + 8;
+    let left = rect.left;
+    if (left + popRect.width > window.innerWidth - 12) {
+      left = window.innerWidth - popRect.width - 12;
+    }
+    if (left < 12) left = 12;
+    if (top + popRect.height > window.innerHeight - 12) {
+      top = rect.top - popRect.height - 8;
+    }
+    pop.style.top = top + 'px';
+    pop.style.left = left + 'px';
+
+    setTimeout(() => {
+      const focusEl = m > 0 ? 'timerM' : (h > 0 ? 'timerH' : 'timerM');
+      const el = document.getElementById(focusEl);
+      el.focus();
+      el.select();
+    }, 50);
+  }
+
+  function closeTimerPopover() {
+    document.getElementById('timerPopover').classList.remove('show');
+    pendingTimer = null;
+  }
+
+  function confirmTimerStart() {
+    const h = parseInt(document.getElementById('timerH').value) || 0;
+    const m = parseInt(document.getElementById('timerM').value) || 0;
+    const s = parseInt(document.getElementById('timerS').value) || 0;
+    const total = h * 3600 + m * 60 + s;
+    if (total < 1) { closeTimerPopover(); return; }
+
+    const sourceBtn = pendingTimer ? pendingTimer.sourceBtn : null;
+    const label = pendingTimer ? pendingTimer.label : 'Timer';
+    startTimer(total, label, sourceBtn);
+    closeTimerPopover();
+  }
+
+  function startTimer(total, label, sourceBtn) {
+    const id = 't' + (++timerCounter);
+    let remaining = total;
+
+    const trayEl = document.createElement('div');
+    trayEl.className = 'timer-tray-item';
+    trayEl.dataset.timerId = id;
+    trayEl.innerHTML = '<span class="timer-tray-label">' + label + '</span><span class="timer-tray-time">' + formatTime(remaining) + '</span><button class="timer-tray-close" onclick="cancelTimer(\'' + id + '\', event)">✕</button>';
+    document.getElementById('timerTray').appendChild(trayEl);
+
+    if (sourceBtn) {
+      sourceBtn.classList.remove('done');
+      sourceBtn.classList.add('running');
+      sourceBtn.dataset.timerId = id;
+    }
+
+    function tick() {
+      remaining--;
+      if (remaining <= 0) {
+        clearInterval(activeTimers[id].intervalId);
+        const t = activeTimers[id];
+        if (t.trayEl) {
+          t.trayEl.classList.add('done');
+          t.trayEl.querySelector('.timer-tray-time').textContent = 'Done';
+        }
+        if (t.sourceBtn) {
+          t.sourceBtn.classList.remove('running');
+          t.sourceBtn.classList.add('done');
+          t.sourceBtn.innerHTML = 'Done';
+        }
+        timerFinished();
+        return;
+      }
+      trayEl.querySelector('.timer-tray-time').textContent = formatTime(remaining);
+      if (sourceBtn) sourceBtn.innerHTML = formatTime(remaining);
+    }
+
+    if (sourceBtn) sourceBtn.innerHTML = formatTime(remaining);
+
+    activeTimers[id] = {
+      intervalId: setInterval(tick, 1000),
+      sourceBtn: sourceBtn,
+      trayEl: trayEl,
+      total: total,
+      label: label
+    };
+
+    trayEl.addEventListener('click', function(e) {
+      if (e.target.classList.contains('timer-tray-close')) return;
+      if (trayEl.classList.contains('done')) cancelTimer(id);
+    });
+  }
+
+  function cancelTimer(id, event) {
+    if (event) event.stopPropagation();
+    const t = activeTimers[id];
+    if (!t) return;
+    clearInterval(t.intervalId);
+    if (t.trayEl && t.trayEl.parentNode) t.trayEl.parentNode.removeChild(t.trayEl);
+    if (t.sourceBtn) {
+      t.sourceBtn.classList.remove('running', 'done');
+      t.sourceBtn.innerHTML = t.sourceBtn.dataset.label || 'Timer';
+    }
+    delete activeTimers[id];
+  }
+
+  function formatTime(s) {
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sec = s % 60;
+    if (h > 0) return h + ':' + String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+    return m + ':' + String(sec).padStart(2, '0');
+  }
+
+  function timerFinished() {
+    try { if (navigator.vibrate) navigator.vibrate([300, 150, 300, 150, 300]); } catch (e) {}
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+      osc.start();
+      osc.stop(ctx.currentTime + 1.2);
+    } catch (e) {}
+  }
+
+  document.addEventListener('click', function(e) {
+    const pop = document.getElementById('timerPopover');
+    if (!pop.classList.contains('show')) return;
+    if (pop.contains(e.target)) return;
+    if (e.target.classList && (e.target.classList.contains('timer-btn') || e.target.classList.contains('timer-start-btn'))) return;
+    closeTimerPopover();
+  });
+
+  // === Cook mode ===
+  let cookRecipe = null;
+  let cookStepIdx = 0;
+  let wakeLock = null;
+
+  function enterCookMode(id) {
+    cookRecipe = recipes.find(r => r.id === id);
+    if (!cookRecipe) return;
+    cookStepIdx = 0;
+    document.getElementById('cookTitle').textContent = cookRecipe.titlePlain;
+    document.getElementById('cookMode').classList.add('active');
+    renderCookStep();
+    document.addEventListener('keydown', cookKeyHandler);
+  }
+
+  function exitCookMode() {
+    document.getElementById('cookMode').classList.remove('active');
+    document.removeEventListener('keydown', cookKeyHandler);
+    releaseWakeLock();
+  }
+
+  function cookKeyHandler(e) {
+    if (e.key === 'Escape') exitCookMode();
+    else if (e.key === 'ArrowRight' || e.key === ' ') cookStepChange(1);
+    else if (e.key === 'ArrowLeft') cookStepChange(-1);
+  }
+
+  function cookStepChange(delta) {
+    const next = cookStepIdx + delta;
+    if (next < 0 || next >= cookRecipe.method.length) return;
+    cookStepIdx = next;
+    renderCookStep();
+  }
+
+  function renderCookStep() {
+    const step = cookRecipe.method[cookStepIdx];
+    const total = cookRecipe.method.length;
+    const stepEl = document.getElementById('cookStep');
+    stepEl.innerHTML = `
+      <div class="cook-step-meta">Step ${cookStepIdx + 1} of ${total}</div>
+      <div class="cook-step-title">${step.title}</div>
+      <div class="cook-step-body">${injectTimers(step.body)}</div>
+    `;
+    document.getElementById('cookProgressFill').style.width = (((cookStepIdx + 1) / total) * 100) + '%';
+    document.getElementById('cookCounter').textContent = (cookStepIdx + 1) + ' / ' + total;
+    document.getElementById('cookPrev').disabled = cookStepIdx === 0;
+    document.getElementById('cookNext').disabled = cookStepIdx === total - 1;
+    document.getElementById('cookNext').textContent = cookStepIdx === total - 1 ? 'Done ✓' : 'Next →';
+  }
+
+  // === Screen wake lock ===
+  async function toggleWakeLock() {
+    const btn = document.getElementById('cookWake');
+    if (wakeLock) {
+      releaseWakeLock();
+      return;
+    }
+    if (!('wakeLock' in navigator)) {
+      btn.title = 'Wake lock not supported on this device';
+      btn.style.opacity = '0.4';
+      setTimeout(() => { btn.style.opacity = ''; }, 1500);
+      return;
+    }
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      btn.classList.add('on');
+      wakeLock.addEventListener('release', () => {
+        wakeLock = null;
+        btn.classList.remove('on');
+      });
+    } catch (e) {
+      console.error('Wake lock failed:', e);
+    }
+  }
+
+  function releaseWakeLock() {
+    if (wakeLock) {
+      wakeLock.release().catch(() => {});
+      wakeLock = null;
+    }
+    document.getElementById('cookWake').classList.remove('on');
+  }
+
+  document.addEventListener('visibilitychange', async () => {
+    if (document.visibilityState === 'visible' &&
+        document.getElementById('cookMode').classList.contains('active') &&
+        document.getElementById('cookWake').classList.contains('on') &&
+        !wakeLock && 'wakeLock' in navigator) {
+      try {
+        wakeLock = await navigator.wakeLock.request('screen');
+      } catch (e) {}
+    }
+  });
 
   function exportData() {
     const json = JSON.stringify(recipes, null, 2);
