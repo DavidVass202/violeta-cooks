@@ -960,419 +960,70 @@
     color: var(--ink-faded);
   }
 
-  /* SHOPPING LIST */
-  .sl-bg {
-    position: fixed;
-    inset: 0;
-    background: rgba(42, 31, 61, 0.35);
-    display: none;
-    z-index: 99;
-    backdrop-filter: blur(3px);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+  .shopping {
+    margin-top: 32px;
+    padding: 24px 28px;
+    background: linear-gradient(135deg, rgba(157, 111, 199, 0.05), rgba(184, 156, 217, 0.04));
+    border: 1px solid var(--line);
+    border-radius: 4px;
   }
 
-  .sl-bg.show {
-    display: block;
-    opacity: 1;
-  }
-
-  .sl-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 100%;
-    max-width: 420px;
-    background: var(--bg-card);
-    border-left: 1px solid var(--line);
-    box-shadow: -8px 0 40px rgba(42, 31, 61, 0.12);
-    z-index: 101;
-    display: flex;
-    flex-direction: column;
-    transform: translateX(100%);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .sl-panel.open { transform: translateX(0); }
-
-  .sl-header {
-    padding: 24px 28px 18px;
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    position: relative;
-  }
-
-  .sl-eyebrow {
+  .shopping-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
+    font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--ink-faded);
-    margin-bottom: 4px;
-  }
-
-  .sl-title {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 28px;
-    letter-spacing: -0.02em;
     color: var(--ink);
-    font-style: italic;
-    line-height: 1;
-  }
-
-  .sl-close {
-    background: transparent;
-    border: 1px solid var(--line);
-    color: var(--ink-soft);
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    flex-shrink: 0;
-  }
-
-  .sl-close:hover { border-color: var(--accent); color: var(--accent-deep); }
-
-  .sl-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 18px 28px;
-  }
-
-  .sl-body::-webkit-scrollbar { width: 4px; }
-  .sl-body::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
-
-  .sl-empty {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--ink-faded);
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 15px;
-  }
-
-  .sl-recipe {
-    margin-bottom: 28px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .sl-recipe:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
-  .sl-recipe-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    gap: 8px;
-  }
-
-  .sl-recipe-info { flex: 1; min-width: 0; }
-
-  .sl-recipe-name {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 1.25;
-    color: var(--ink);
-    letter-spacing: -0.01em;
-  }
-
-  .sl-recipe-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-faded);
-    margin-top: 4px;
-  }
-
-  .sl-remove {
-    background: transparent;
-    border: 1px solid var(--line);
-    color: var(--ink-faded);
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 14px;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    flex-shrink: 0;
-  }
-
-  .sl-remove:hover { border-color: var(--accent); color: var(--accent-deep); }
-
-  .sl-group-name {
-    font-family: 'Fraunces', serif;
-    font-size: 12px;
-    color: var(--accent-deep);
-    margin: 12px 0 4px;
-    font-style: italic;
-    font-weight: 500;
-  }
-
-  .sl-items { list-style: none; }
-
-  .sl-item {
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
     gap: 10px;
+  }
+
+  .shopping-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .shopping-label .count {
+    color: var(--ink-faded);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+
+  .shopping-list {
+    list-style: none;
+    columns: 2;
+    column-gap: 36px;
+  }
+
+  .shopping-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
     padding: 7px 0;
-    cursor: pointer;
-    font-size: 13.5px;
+    font-size: 14px;
     border-bottom: 1px dotted var(--line);
-    transition: opacity 0.2s;
+    break-inside: avoid;
   }
 
-  .sl-item:last-child { border-bottom: none; }
-
-  .sl-item.checked { opacity: 0.4; }
-  .sl-item.checked .sl-name,
-  .sl-item.checked .sl-amount { text-decoration: line-through; }
-
-  .sl-check {
-    width: 16px;
-    height: 16px;
-    border: 1.5px solid var(--line);
-    border-radius: 3px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    color: white;
-    flex-shrink: 0;
-    transition: all 0.15s;
-    background: white;
-  }
-
-  .sl-item.checked .sl-check {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-
-  .sl-amount {
+  .shop-amount {
     font-family: 'Fraunces', serif;
     font-weight: 600;
     color: var(--ink);
     white-space: nowrap;
-    min-width: 60px;
-    font-size: 13.5px;
+    min-width: 70px;
   }
 
-  .sl-name {
+  .shop-name {
     color: var(--ink-soft);
     flex: 1;
-    line-height: 1.4;
   }
 
-  .sl-footer {
-    padding: 16px 28px;
-    border-top: 1px solid var(--line);
-    display: flex;
-    gap: 8px;
-    flex-shrink: 0;
-  }
-
-  .sl-footer button {
-    flex: 1;
-    padding: 10px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    border-radius: 3px;
-    transition: all 0.2s;
-    border: 1px solid transparent;
-  }
-
-  .sl-copy {
-    background: transparent;
-    color: var(--ink-soft);
-    border-color: var(--line);
-  }
-
-  .sl-copy:hover { border-color: var(--accent); color: var(--accent-deep); }
-
-  .sl-clear {
-    background: transparent;
-    color: var(--accent-deep);
-    border-color: var(--accent-deep);
-  }
-
-  .sl-clear:hover { background: var(--accent-deep); color: white; }
-
-  .sl-section {
-    margin-bottom: 28px;
-  }
-
-  .sl-section:last-child { margin-bottom: 0; }
-
-  .sl-section-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-faded);
-    margin-bottom: 12px;
-  }
-
-  .sl-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .sl-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 5px 5px 5px 12px;
-    background: rgba(157, 111, 199, 0.08);
-    border: 1px solid var(--line);
-    border-radius: 100px;
-  }
-
-  .sl-chip-name {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    color: var(--ink);
-    font-size: 13px;
-    letter-spacing: -0.01em;
-  }
-
-  .sl-chip-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-faded);
-  }
-
-  .sl-chip-x {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: none;
-    background: transparent;
-    color: var(--ink-faded);
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    line-height: 1;
-    padding: 0;
-  }
-
-  .sl-chip-x:hover { background: var(--accent); color: white; }
-
-  .sl-source {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    color: var(--ink-faded);
-    letter-spacing: 0.05em;
-    text-transform: lowercase;
-    margin-top: 2px;
-  }
-
-  /* Sidebar shopping list button */
-  .btn-shop {
-    background: transparent;
-    color: var(--ink-soft);
-    border: 1px solid var(--line);
-    padding: 9px 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    border-radius: 2px;
-    position: relative;
-    transition: all 0.2s;
-  }
-
-  .btn-shop:hover { border-color: var(--accent); color: var(--accent-deep); }
-
-  .btn-shop-badge {
-    position: absolute;
-    top: -7px;
-    right: -7px;
-    background: var(--accent);
-    color: white;
-    font-size: 9px;
-    font-weight: 600;
-    border-radius: 100px;
-    min-width: 16px;
-    height: 16px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 0 4px;
-    letter-spacing: 0;
-    font-family: 'Inter Tight', sans-serif;
-  }
-
-  /* Add to list button on recipes */
-  .add-list-btn {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 7px 14px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    border-radius: 100px;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .add-list-btn:hover { background: var(--accent-deep); }
-  .add-list-btn.added { background: var(--sage); }
-
-  /* Toast */
-  .toast {
-    position: fixed;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--ink);
-    color: var(--bg-card);
-    padding: 12px 22px;
-    border-radius: 100px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    z-index: 200;
-    opacity: 0;
-    transition: all 0.3s;
-    pointer-events: none;
-    box-shadow: 0 8px 24px rgba(42, 31, 61, 0.25);
-  }
-
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+  @media (max-width: 700px) {
+    .shopping-list { columns: 1; }
   }
 
   @media (max-width: 900px) {
@@ -1385,9 +1036,6 @@
     .sub-arrow { display: none; }
   }
 
-  @media (max-width: 600px) {
-    .sl-panel { max-width: 100%; }
-  }
 </style>
 </head>
 <body>
@@ -1415,9 +1063,6 @@
 
       <div class="sidebar-footer">
         <button class="btn-add" onclick="openModal()">+ New</button>
-        <button class="btn-shop" onclick="openShoppingList()" title="Shopping list">
-          List<span class="btn-shop-badge" id="shoppingBadge"></span>
-        </button>
         <button class="btn-export" onclick="exportData()" title="Export all">↓</button>
       </div>
     </div>
@@ -1425,23 +1070,6 @@
 
   <main class="main" id="main"></main>
 </div>
-
-<div class="sl-bg" id="shoppingBg" onclick="closeShoppingList()"></div>
-
-<aside class="sl-panel" id="shoppingPanel">
-  <div class="sl-header">
-    <div>
-      <div class="sl-eyebrow">Shopping</div>
-      <h2 class="sl-title">List</h2>
-    </div>
-    <button class="sl-close" onclick="closeShoppingList()" title="Close">×</button>
-  </div>
-  <div class="sl-body" id="shoppingBody"></div>
-  <div class="sl-footer">
-    <button class="sl-copy" onclick="copyShoppingList()">Copy as text</button>
-    <button class="sl-clear" onclick="clearShoppingList()">Clear all</button>
-  </div>
-</aside>
 
 <div class="modal-bg" id="modal">
   <div class="modal">
@@ -2015,7 +1643,6 @@
       <article class="recipe">
         <div class="recipe-header">
           <div class="recipe-actions">
-            <button class="add-list-btn" onclick="addToShoppingList('${recipe.id}', this)" title="Add to shopping list">+ List</button>
             <button class="icon-btn" onclick="editRecipe('${recipe.id}')" title="Edit">✎</button>
           </div>
           <div class="recipe-eyebrow">Recipe № ${String(recipes.findIndex(r => r.id === recipe.id) + 1).padStart(2, '0')}</div>
@@ -2073,6 +1700,24 @@
               `).join('')}
             </div>
           </div>` : ''}
+
+        ${(() => {
+          const shopItems = buildRecipeShoppingList(recipe, scale);
+          if (shopItems.length === 0) return '';
+          return `
+            <div class="shopping">
+              <div class="shopping-label">Shopping list <span class="count">${shopItems.length} items</span></div>
+              <ul class="shopping-list">
+                ${shopItems.map(item => `
+                  <li>
+                    <span class="shop-amount">${item.amount || '·'}</span>
+                    <span class="shop-name">${item.name}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          `;
+        })()}
 
         ${recipe.notes ? `
           <div class="notes">
@@ -2328,324 +1973,146 @@
     renderMain();
   }
 
-  // ===== SHOPPING LIST =====
+  function displayNameForShopping(name) {
+    let out = '';
+    let depth = 0;
+    for (let i = 0; i < name.length; i++) {
+      const c = name[i];
+      if (c === '(') depth++;
+      else if (c === ')') depth--;
+      else if (c === ',' && depth === 0) break;
+      out += c;
+    }
+    return out.trim();
+  }
 
-  let shoppingList = [];
-  let combinedRefs = [];
-  const SHOPPING_KEY = 'violeta-cooks-shopping-list';
-
-  function normalizeIngredientName(name) {
-    if (!name) return '';
-    let n = name
-      .toLowerCase()
-      .replace(/\([^)]*\)/g, '')
-      .split(',')[0]
-      .trim()
-      .replace(/\s+/g, ' ');
-    n = n.replace(/^(whole|fresh|ripe|large|small|medium|extra|hot|cold|dry|raw|cooked)\s+/, '');
+  function normalizeForMatch(name) {
+    let n = name.toLowerCase().replace(/\([^)]*\)/g, '').split(',')[0].trim().replace(/\s+/g, ' ');
+    n = n.replace(/^(whole|fresh|ripe|large|small|medium|extra|hot|cold|dry|raw|cooked|the|hot)\s+/, '');
     return n;
   }
 
-  function formatCombinedAmount(total, unit) {
-    if (total === 0 || isNaN(total)) return '';
-    if (unit === 'g' || unit === 'ml') {
-      return roundGrams(total) + unit;
-    }
-    if (['tbsp', 'tsp', 'cup', 'cups'].includes(unit)) {
-      const r = Math.round(total * 4) / 4;
-      return `${r} ${unit}`;
-    }
-    if (!unit) {
-      const r = Math.round(total * 2) / 2;
-      return String(r);
-    }
-    const r = Math.round(total * 10) / 10;
-    return `${Number.isInteger(r) ? r : r.toFixed(1)} ${unit}`;
-  }
+  function buildRecipeShoppingList(recipe, scale) {
+    const citrusCounts = { lemon: 0, lime: 0, orange: 0 };
+    const citrusZestSeen = { lemon: false, lime: false, orange: false };
+    const items = new Map();
 
-  function buildCombinedList() {
-    const map = new Map();
-    combinedRefs = [];
-
-    shoppingList.forEach(entry => {
-      const scale = entry.servings / entry.baseServings;
-      entry.items.forEach((item, idx) => {
-        const normalized = normalizeIngredientName(item.name);
-        const unit = (item.unit || '').toLowerCase();
-        const num = parseFloat(item.amount);
-        const hasNumeric = !isNaN(num) && item.amount !== '';
-
-        const key = hasNumeric ? `n|${normalized}|${unit}` : `t|${normalized}`;
-
-        if (!map.has(key)) {
-          map.set(key, {
-            displayName: item.name.replace(/\([^)]*\)/g, '').split(',')[0].trim().replace(/\s+/g, ' '),
-            originalName: item.name,
-            unit: unit,
-            total: 0,
-            hasNumeric,
-            recipes: new Set(),
-            slRefs: [],
-            checked: true,
-            insertOrder: map.size
-          });
-        }
-        const e = map.get(key);
-        if (hasNumeric) e.total += num * scale;
-        e.recipes.add(entry.recipeName);
-        e.slRefs.push({ slId: entry.id, itemIdx: idx });
-        if (!item.checked) e.checked = false;
-      });
-    });
-
-    const items = Array.from(map.entries()).map(([key, v]) => ({
-      key,
-      displayName: v.displayName,
-      originalName: v.originalName,
-      unit: v.unit,
-      total: v.total,
-      hasNumeric: v.hasNumeric,
-      recipes: Array.from(v.recipes),
-      slRefs: v.slRefs,
-      checked: v.checked
-    }));
-
-    items.sort((a, b) => {
-      const aName = normalizeIngredientName(a.displayName);
-      const bName = normalizeIngredientName(b.displayName);
-      return aName.localeCompare(bName);
-    });
-
-    items.forEach((item, i) => {
-      item.refIdx = i;
-      combinedRefs[i] = item.slRefs;
-    });
-
-    return items;
-  }
-
-  async function toggleCombinedItem(refIdx) {
-    const slRefs = combinedRefs[refIdx];
-    if (!slRefs) return;
-    let allChecked = true;
-    slRefs.forEach(({ slId, itemIdx }) => {
-      const entry = shoppingList.find(s => s.id === slId);
-      if (entry && !entry.items[itemIdx].checked) allChecked = false;
-    });
-    const newState = !allChecked;
-    slRefs.forEach(({ slId, itemIdx }) => {
-      const entry = shoppingList.find(s => s.id === slId);
-      if (entry && entry.items[itemIdx]) entry.items[itemIdx].checked = newState;
-    });
-    await saveShoppingList();
-    renderShoppingList();
-  }
-
-  async function loadShoppingList() {
-    try {
-      const result = await window.storage.get(SHOPPING_KEY);
-      if (result && result.value) {
-        shoppingList = JSON.parse(result.value);
-      }
-    } catch (e) {}
-  }
-
-  async function saveShoppingList() {
-    try {
-      await window.storage.set(SHOPPING_KEY, JSON.stringify(shoppingList));
-    } catch (e) {
-      console.error('Save shopping list failed:', e);
-    }
-  }
-
-  async function addToShoppingList(recipeId, btn) {
-    const recipe = recipes.find(r => r.id === recipeId);
-    if (!recipe) return;
-
-    const servings = (recipeId === activeId) ? activeServings : recipe.servings;
-
-    const items = [];
     recipe.ingredientGroups.forEach(g => {
       g.items.forEach(item => {
-        items.push({
-          amount: item.amount,
-          unit: item.unit,
-          name: item.name,
-          group: g.name || '',
-          checked: false
+        const nameLower = item.name.toLowerCase();
+        const num = parseFloat(item.amount);
+        const hasNum = !isNaN(num) && item.amount !== '';
+        const scaledAmount = hasNum ? num * scale : 0;
+
+        // Citrus handling: lemon, lime, orange
+        let citrus = null;
+        if (/\blemon/i.test(item.name)) citrus = 'lemon';
+        else if (/\blime/i.test(item.name)) citrus = 'lime';
+        else if (/\borange/i.test(item.name)) citrus = 'orange';
+
+        if (citrus) {
+          const isJuice = nameLower.includes('juice');
+          const isZest = nameLower.includes('zest');
+
+          if (isZest && !isJuice) {
+            // Track zest, contributes only at the end if no juice
+            citrusZestSeen[citrus] = true;
+          } else if (isJuice && item.unit === 'ml') {
+            const mlPerFruit = citrus === 'lemon' ? 30 : citrus === 'lime' ? 20 : 70;
+            citrusCounts[citrus] += scaledAmount / mlPerFruit;
+          } else if (isJuice && hasNum && !item.unit) {
+            citrusCounts[citrus] += scaledAmount;
+          } else if (!hasNum && isJuice) {
+            const match = item.name.match(/of\s+(\d+(?:\.\d+)?|\d+\/\d+)\s+/i);
+            if (match) {
+              let n;
+              if (match[1].includes('/')) {
+                const [a, b] = match[1].split('/');
+                n = parseFloat(a) / parseFloat(b);
+              } else {
+                n = parseFloat(match[1]);
+              }
+              citrusCounts[citrus] += n * scale;
+            } else {
+              citrusCounts[citrus] += scale;
+            }
+          } else if (hasNum) {
+            citrusCounts[citrus] += scaledAmount;
+          } else {
+            // Fallback like "Lemon wedges"
+            citrusCounts[citrus] += scale;
+          }
+          return;
+        }
+
+        // Non-citrus: combine by normalized name + unit
+        const cleanName = displayNameForShopping(item.name);
+        const norm = normalizeForMatch(item.name);
+        const key = `${norm}|${item.unit || ''}`;
+
+        if (!items.has(key)) {
+          items.set(key, {
+            displayName: cleanName,
+            unit: item.unit || '',
+            total: 0,
+            hasNum: false,
+            norm
+          });
+        }
+        const e = items.get(key);
+        if (hasNum) {
+          e.total += scaledAmount;
+          e.hasNum = true;
+        }
+      });
+    });
+
+    // Dedupe: drop no-amount entries when a numeric version of the same ingredient exists
+    const numericNorms = new Set();
+    items.forEach(v => { if (v.hasNum) numericNorms.add(v.norm); });
+    const toDelete = [];
+    items.forEach((v, k) => {
+      if (!v.hasNum && numericNorms.has(v.norm)) toDelete.push(k);
+    });
+    toDelete.forEach(k => items.delete(k));
+
+    const result = [];
+
+    ['lemon', 'lime', 'orange'].forEach(c => {
+      let count = citrusCounts[c];
+      // If only zest was mentioned (no juice or whole), assume 1 fruit
+      if (count === 0 && citrusZestSeen[c]) count = scale;
+      if (count > 0) {
+        const n = Math.ceil(count);
+        result.push({
+          amount: String(n),
+          name: n === 1 ? c : c + 's'
         });
-      });
+      }
     });
 
-    const existingIdx = shoppingList.findIndex(s => s.recipeId === recipeId);
-    let wasUpdate = false;
-    if (existingIdx >= 0) {
-      shoppingList[existingIdx] = {
-        ...shoppingList[existingIdx],
-        servings,
-        baseServings: recipe.servings,
-        items
-      };
-      wasUpdate = true;
-    } else {
-      shoppingList.push({
-        id: 'sl-' + Date.now(),
-        recipeId,
-        recipeName: recipe.titlePlain,
-        servings,
-        baseServings: recipe.servings,
-        items
-      });
-    }
-
-    await saveShoppingList();
-    renderShoppingBadge();
-
-    if (btn) {
-      btn.classList.add('added');
-      btn.textContent = wasUpdate ? '✓ Updated' : '✓ Added';
-      setTimeout(() => {
-        btn.classList.remove('added');
-        btn.textContent = '+ List';
-      }, 1500);
-    }
-    showToast(wasUpdate ? 'Updated in shopping list' : 'Added to shopping list');
-  }
-
-  async function removeFromShoppingList(slId) {
-    shoppingList = shoppingList.filter(s => s.id !== slId);
-    await saveShoppingList();
-    renderShoppingList();
-    renderShoppingBadge();
-  }
-
-  async function toggleShoppingItem(slId, itemIdx) {
-    const entry = shoppingList.find(s => s.id === slId);
-    if (!entry) return;
-    entry.items[itemIdx].checked = !entry.items[itemIdx].checked;
-    await saveShoppingList();
-    renderShoppingList();
-  }
-
-  async function clearShoppingList() {
-    if (shoppingList.length === 0) return;
-    if (!confirm('Clear the entire shopping list?')) return;
-    shoppingList = [];
-    await saveShoppingList();
-    renderShoppingList();
-    renderShoppingBadge();
-  }
-
-  function renderShoppingBadge() {
-    const badge = document.getElementById('shoppingBadge');
-    if (!badge) return;
-    const count = shoppingList.length;
-    if (count === 0) {
-      badge.style.display = 'none';
-    } else {
-      badge.style.display = 'flex';
-      badge.textContent = count;
-    }
-  }
-
-  function renderShoppingList() {
-    const body = document.getElementById('shoppingBody');
-    if (!body) return;
-
-    if (shoppingList.length === 0) {
-      body.innerHTML = `<div class="sl-empty">Nothing here yet. Open a recipe and tap "+ List" to start.</div>`;
-      return;
-    }
-
-    const combined = buildCombinedList();
-
-    const recipesHTML = shoppingList.map(entry => `
-      <span class="sl-chip">
-        <span class="sl-chip-name">${entry.recipeName}</span>
-        <span class="sl-chip-meta">${entry.servings} serves</span>
-        <button class="sl-chip-x" onclick="removeFromShoppingList('${entry.id}')" title="Remove">×</button>
-      </span>
-    `).join('');
-
-    const itemsHTML = combined.map(item => {
-      const display = item.hasNumeric ? formatCombinedAmount(item.total, item.unit) : '';
-      const showSourceCount = item.recipes.length > 1;
-      return `<li class="sl-item ${item.checked ? 'checked' : ''}" onclick="toggleCombinedItem(${item.refIdx})">
-        <span class="sl-check">${item.checked ? '✓' : ''}</span>
-        <span class="sl-amount">${display || '·'}</span>
-        <span class="sl-name">${item.displayName}${showSourceCount ? `<span class="sl-source">${item.recipes.length} recipes</span>` : ''}</span>
-      </li>`;
-    }).join('');
-
-    body.innerHTML = `
-      <div class="sl-section">
-        <div class="sl-section-label">${shoppingList.length} recipe${shoppingList.length === 1 ? '' : 's'}</div>
-        <div class="sl-chips">${recipesHTML}</div>
-      </div>
-      <div class="sl-section">
-        <div class="sl-section-label">${combined.length} item${combined.length === 1 ? '' : 's'} to buy</div>
-        <ul class="sl-items">${itemsHTML}</ul>
-      </div>
-    `;
-  }
-
-  function openShoppingList() {
-    document.getElementById('shoppingPanel').classList.add('open');
-    document.getElementById('shoppingBg').classList.add('show');
-    renderShoppingList();
-  }
-
-  function closeShoppingList() {
-    document.getElementById('shoppingPanel').classList.remove('open');
-    document.getElementById('shoppingBg').classList.remove('show');
-  }
-
-  function copyShoppingList() {
-    if (shoppingList.length === 0) {
-      showToast('List is empty');
-      return;
-    }
-    const combined = buildCombinedList();
-    let text = 'Shopping List\n\n';
-    text += 'From: ' + shoppingList.map(s => `${s.recipeName} (${s.servings} serves)`).join(', ') + '\n\n';
-    text += '─'.repeat(40) + '\n\n';
-
-    combined.forEach(item => {
-      const display = item.hasNumeric ? formatCombinedAmount(item.total, item.unit) : '';
-      const marker = item.checked ? '[x]' : '[ ]';
-      const amt = display ? display + ' ' : '';
-      text += `${marker} ${amt}${item.displayName}\n`;
+    items.forEach(v => {
+      let amount = '';
+      if (v.hasNum && v.total > 0) {
+        if (v.unit === 'g' || v.unit === 'ml') {
+          amount = roundGrams(v.total) + v.unit;
+        } else if (['tbsp', 'tsp', 'cup', 'cups'].includes(v.unit)) {
+          const r = Math.round(v.total * 4) / 4;
+          amount = `${r} ${v.unit}`;
+        } else if (!v.unit) {
+          const r = Math.round(v.total * 2) / 2;
+          amount = String(r);
+        } else {
+          const r = Math.round(v.total * 10) / 10;
+          amount = `${Number.isInteger(r) ? r : r.toFixed(1)} ${v.unit}`;
+        }
+      }
+      result.push({ amount, name: v.displayName });
     });
 
-    navigator.clipboard.writeText(text).then(() => {
-      showToast('Copied to clipboard');
-    }).catch(() => {
-      showToast('Copy failed');
-    });
+    result.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    return result;
   }
-
-  function showToast(message) {
-    let toast = document.getElementById('toast');
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.id = 'toast';
-      toast.className = 'toast';
-      document.body.appendChild(toast);
-    }
-    toast.textContent = message;
-    toast.classList.add('show');
-    clearTimeout(toast._timer);
-    toast._timer = setTimeout(() => toast.classList.remove('show'), 1800);
-  }
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeShoppingList();
-      closeModal();
-    }
-  });
-
-  // ===== END SHOPPING LIST =====
 
   function exportData() {
     const json = JSON.stringify(recipes, null, 2);
@@ -2662,12 +2129,10 @@
     await loadSidebarState();
     applySidebarState();
     await loadRecipes();
-    await loadShoppingList();
     activeId = recipes[0]?.id || null;
     activeServings = recipes[0]?.servings || 4;
     renderSidebar();
     renderMain();
-    renderShoppingBadge();
   })();
 </script>
 
