@@ -3,26 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>David's Dishes</title>
+<title>Violeta Cooks</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,800&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f4ede1;
-    --bg-card: #fbf6ec;
-    --ink: #1f1a14;
-    --ink-soft: #5a4f3f;
-    --ink-faded: #8a7d6a;
-    --accent: #c5462a;
-    --accent-deep: #8e2f1c;
-    --olive: #6b7341;
-    --olive-deep: #4a5028;
-    --gold: #c89b3c;
-    --line: #d9cdb8;
-    --carb: #c89b3c;
-    --protein: #c5462a;
-    --fat: #6b7341;
+    --bg: #f5eef9;
+    --bg-card: #fbf6fe;
+    --ink: #2a1f3d;
+    --ink-soft: #5e4f76;
+    --ink-faded: #9486a8;
+    --accent: #9d6fc7;
+    --accent-deep: #6b4490;
+    --lavender: #b89cd9;
+    --rose: #d4a5c9;
+    --sage: #a8b89c;
+    --gold: #c9a96e;
+    --line: #e2d4ee;
+    --carb: #c9a96e;
+    --protein: #9d6fc7;
+    --fat: #a8b89c;
     --sidebar-width: 260px;
     --sidebar-collapsed-width: 56px;
   }
@@ -36,9 +37,23 @@
     color: var(--ink);
     line-height: 1.6;
     overflow: hidden;
+    position: relative;
+  }
+
+  /* Subtle floral background pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
     background-image:
-      radial-gradient(circle at 20% 30%, rgba(197, 70, 42, 0.04) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(107, 115, 65, 0.05) 0%, transparent 50%);
+      radial-gradient(circle at 15% 20%, rgba(157, 111, 199, 0.06) 0%, transparent 35%),
+      radial-gradient(circle at 85% 75%, rgba(212, 165, 201, 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(184, 156, 217, 0.03) 0%, transparent 50%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><g fill='none' stroke='%23b89cd9' stroke-width='0.6' opacity='0.18'><g transform='translate(40 50)'><circle cx='0' cy='-8' r='5'/><circle cx='7.6' cy='-2.5' r='5'/><circle cx='4.7' cy='6.5' r='5'/><circle cx='-4.7' cy='6.5' r='5'/><circle cx='-7.6' cy='-2.5' r='5'/><circle cx='0' cy='0' r='1.8' fill='%23c9a96e' stroke='none' opacity='0.8'/></g><g transform='translate(170 110)'><circle cx='0' cy='-6' r='4'/><circle cx='5.7' cy='-1.9' r='4'/><circle cx='3.5' cy='4.9' r='4'/><circle cx='-3.5' cy='4.9' r='4'/><circle cx='-5.7' cy='-1.9' r='4'/><circle cx='0' cy='0' r='1.4' fill='%23c9a96e' stroke='none' opacity='0.8'/></g><g transform='translate(90 180)'><circle cx='0' cy='-7' r='4.5'/><circle cx='6.7' cy='-2.2' r='4.5'/><circle cx='4.1' cy='5.7' r='4.5'/><circle cx='-4.1' cy='5.7' r='4.5'/><circle cx='-6.7' cy='-2.2' r='4.5'/><circle cx='0' cy='0' r='1.6' fill='%23c9a96e' stroke='none' opacity='0.8'/></g><g transform='translate(200 30)' opacity='0.7'><circle cx='0' cy='-5' r='3.5'/><circle cx='4.8' cy='-1.5' r='3.5'/><circle cx='3' cy='4' r='3.5'/><circle cx='-3' cy='4' r='3.5'/><circle cx='-4.8' cy='-1.5' r='3.5'/></g><g transform='translate(20 200)' opacity='0.7'><circle cx='0' cy='-5' r='3.5'/><circle cx='4.8' cy='-1.5' r='3.5'/><circle cx='3' cy='4' r='3.5'/><circle cx='-3' cy='4' r='3.5'/><circle cx='-4.8' cy='-1.5' r='3.5'/></g><path d='M 130 60 Q 138 65 135 75 Q 132 80 125 78' opacity='0.5'/><path d='M 60 130 Q 68 135 65 145 Q 62 150 55 148' opacity='0.5'/></g></svg>");
+    background-repeat: repeat;
+    background-size: 240px 240px, 240px 240px, 100% 100%, 240px 240px;
   }
 
   .app {
@@ -46,6 +61,8 @@
     grid-template-columns: var(--sidebar-width) 1fr;
     height: 100vh;
     transition: grid-template-columns 0.3s ease;
+    position: relative;
+    z-index: 1;
   }
 
   .app.collapsed { grid-template-columns: var(--sidebar-collapsed-width) 1fr; }
@@ -57,6 +74,7 @@
     flex-direction: column;
     overflow: hidden;
     position: relative;
+    backdrop-filter: blur(8px);
   }
 
   .sidebar-toggle {
@@ -79,9 +97,9 @@
   }
 
   .sidebar-toggle:hover {
-    background: var(--ink);
-    color: var(--bg-card);
-    border-color: var(--ink);
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
   }
 
   .app.collapsed .sidebar-toggle { right: 50%; transform: translateX(50%); }
@@ -100,6 +118,18 @@
   .brand {
     padding: 22px 22px 16px;
     border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+
+  .brand::after {
+    content: '';
+    position: absolute;
+    right: 52px;
+    top: 22px;
+    width: 22px;
+    height: 22px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239d6fc7' stroke-width='1.2' opacity='0.6'><circle cx='12' cy='6' r='3'/><circle cx='17.2' cy='9.6' r='3'/><circle cx='15.3' cy='15.8' r='3'/><circle cx='8.7' cy='15.8' r='3'/><circle cx='6.8' cy='9.6' r='3'/><circle cx='12' cy='11' r='1.2' fill='%23c9a96e' stroke='none'/></svg>");
+    background-repeat: no-repeat;
   }
 
   .brand-mark {
@@ -114,10 +144,11 @@
   .brand-title {
     font-family: 'Fraunces', serif;
     font-weight: 600;
-    font-size: 22px;
-    line-height: 1.1;
+    font-size: 24px;
+    line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--ink);
+    font-style: italic;
   }
 
   .brand-sub {
@@ -126,9 +157,17 @@
     margin-top: 4px;
   }
 
-  .search {
+  .search-row {
     padding: 14px 22px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .search {
+    flex: 1;
     position: relative;
+    min-width: 0;
   }
 
   .search input {
@@ -150,10 +189,16 @@
   .search::before {
     content: '⌕';
     position: absolute;
-    left: 22px;
-    top: 17px;
+    left: 0;
+    top: 5px;
     color: var(--ink-faded);
     font-size: 16px;
+  }
+
+  .search-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
   }
 
   .tags {
@@ -178,11 +223,11 @@
     transition: all 0.2s;
   }
 
-  .tag-chip:hover { border-color: var(--ink-soft); }
+  .tag-chip:hover { border-color: var(--accent); color: var(--accent-deep); }
   .tag-chip.active {
-    background: var(--ink);
-    color: var(--bg-card);
-    border-color: var(--ink);
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
   }
 
   .recipe-list {
@@ -202,10 +247,10 @@
     transition: all 0.2s;
   }
 
-  .recipe-item:hover { background: rgba(197, 70, 42, 0.04); }
+  .recipe-item:hover { background: rgba(157, 111, 199, 0.05); }
   .recipe-item.active {
     border-left-color: var(--accent);
-    background: rgba(197, 70, 42, 0.06);
+    background: rgba(157, 111, 199, 0.08);
   }
 
   .recipe-item-num {
@@ -232,45 +277,48 @@
     letter-spacing: 0.04em;
   }
 
-  .sidebar-footer {
-    padding: 14px 22px;
-    border-top: 1px solid var(--line);
-    display: flex;
-    gap: 6px;
-  }
-
   .btn-add {
-    flex: 1;
-    background: var(--ink);
-    color: var(--bg-card);
+    background: var(--accent);
+    color: white;
     border: none;
-    padding: 9px;
+    width: 28px;
+    height: 28px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
     transition: background 0.2s;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
   }
 
-  .btn-add:hover { background: var(--accent); }
+  .btn-add:hover { background: var(--accent-deep); }
 
   .btn-export {
     background: transparent;
     color: var(--ink-soft);
     border: 1px solid var(--line);
-    padding: 9px 12px;
+    width: 28px;
+    height: 28px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-size: 13px;
     cursor: pointer;
     transition: all 0.2s;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
   }
 
   .btn-export:hover {
-    border-color: var(--ink-soft);
-    color: var(--ink);
+    border-color: var(--accent);
+    color: var(--accent-deep);
   }
 
   .main {
@@ -348,7 +396,7 @@
   }
 
   .stat {
-    border-left: 2px solid var(--ink);
+    border-left: 2px solid var(--accent);
     padding-left: 12px;
   }
 
@@ -380,7 +428,7 @@
     padding: 18px 20px;
     background: var(--bg-card);
     border: 1px solid var(--line);
-    border-radius: 2px;
+    border-radius: 4px;
   }
 
   .macros-header {
@@ -418,7 +466,7 @@
 
   .macro-bar {
     height: 5px;
-    background: rgba(0,0,0,0.06);
+    background: rgba(42, 31, 61, 0.06);
     border-radius: 100px;
     overflow: hidden;
     margin-bottom: 8px;
@@ -477,7 +525,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 2px;
+    border-radius: 4px;
   }
 
   .servings-label {
@@ -552,9 +600,10 @@
   .ing-group-title {
     font-family: 'Fraunces', serif;
     font-size: 13px;
-    color: var(--ink-soft);
+    color: var(--accent-deep);
     margin-bottom: 8px;
     font-weight: 500;
+    font-style: italic;
   }
 
   .ing-list { list-style: none; }
@@ -590,10 +639,11 @@
     font-family: 'Fraunces', serif;
     font-weight: 400;
     font-size: 32px;
-    color: var(--ink-faded);
+    color: var(--lavender);
     line-height: 1;
     margin-bottom: 6px;
     display: block;
+    font-style: italic;
   }
 
   .step-title {
@@ -612,16 +662,16 @@
   }
 
   .step-body strong {
-    color: var(--ink);
+    color: var(--accent-deep);
     font-weight: 600;
   }
 
   .notes {
     margin-top: 52px;
     padding: 24px 28px;
-    background: linear-gradient(135deg, rgba(107, 115, 65, 0.08), rgba(200, 155, 60, 0.06));
-    border-left: 3px solid var(--olive);
-    border-radius: 2px;
+    background: linear-gradient(135deg, rgba(157, 111, 199, 0.08), rgba(212, 165, 201, 0.08));
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
   }
 
   .notes-label {
@@ -629,7 +679,7 @@
     font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--olive-deep);
+    color: var(--accent-deep);
     margin-bottom: 10px;
   }
 
@@ -641,13 +691,12 @@
     font-weight: 400;
   }
 
-  /* SUBSTITUTES */
   .subs {
     margin-top: 32px;
     padding: 24px 28px;
     background: var(--bg-card);
     border: 1px solid var(--line);
-    border-radius: 2px;
+    border-radius: 4px;
   }
 
   .subs-label {
@@ -687,17 +736,12 @@
     padding: 8px 0;
     font-size: 14px;
     line-height: 1.5;
-    border-bottom: 1px dotted var(--line);
   }
-
-  .sub-item:last-child { border-bottom: none; }
 
   .sub-from {
     font-family: 'Fraunces', serif;
     font-weight: 600;
     color: var(--ink);
-    word-wrap: break-word;
-    overflow-wrap: break-word;
   }
 
   .sub-arrow {
@@ -708,71 +752,6 @@
 
   .sub-to {
     color: var(--ink-soft);
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-  }
-
-  .shopping {
-    margin-top: 32px;
-    padding: 24px 28px;
-    background: var(--bg-card);
-    border: 1px solid var(--line);
-    border-radius: 2px;
-  }
-
-  .shopping-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .shopping-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--line);
-  }
-
-  .shopping-list {
-    list-style: none;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0 28px;
-  }
-
-  @media (min-width: 700px) {
-    .shopping-list { grid-template-columns: 1fr 1fr; }
-  }
-
-  .shopping-item {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px dotted var(--line);
-    font-size: 14px;
-  }
-
-  .shopping-item:last-child { border-bottom: none; }
-
-  .shopping-amount {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    color: var(--ink);
-    white-space: nowrap;
-    min-width: 70px;
-    font-size: 14px;
-  }
-
-  .shopping-name {
-    color: var(--ink-soft);
-    flex: 1;
   }
 
   .empty {
@@ -787,16 +766,18 @@
   }
 
   .empty-mark {
-    font-family: 'Fraunces', serif;
-    font-size: 110px;
-    color: var(--line);
-    line-height: 1;
+    width: 110px;
+    height: 110px;
     margin-bottom: 14px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e2d4ee' stroke-width='0.8'><circle cx='12' cy='6' r='3'/><circle cx='17.2' cy='9.6' r='3'/><circle cx='15.3' cy='15.8' r='3'/><circle cx='8.7' cy='15.8' r='3'/><circle cx='6.8' cy='9.6' r='3'/><circle cx='12' cy='11' r='1.4' fill='%23e2d4ee' stroke='none'/></svg>");
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 
   .empty p {
     font-family: 'Fraunces', serif;
     font-size: 17px;
+    font-style: italic;
   }
 
   .recipe-tags {
@@ -812,18 +793,19 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     padding: 3px 9px;
-    background: var(--ink);
-    color: var(--bg-card);
+    background: var(--accent);
+    color: white;
     border-radius: 100px;
   }
 
-  .recipe-tag.olive { background: var(--olive); }
-  .recipe-tag.gold { background: var(--gold); color: var(--ink); }
+  .recipe-tag.rose { background: var(--rose); }
+  .recipe-tag.sage { background: var(--sage); }
+  .recipe-tag.gold { background: var(--gold); }
 
   .modal-bg {
     position: fixed;
     inset: 0;
-    background: rgba(31, 26, 20, 0.5);
+    background: rgba(42, 31, 61, 0.5);
     display: none;
     align-items: center;
     justify-content: center;
@@ -840,8 +822,8 @@
     max-height: 88vh;
     overflow-y: auto;
     padding: 36px;
-    border-radius: 4px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    box-shadow: 0 20px 60px rgba(42, 31, 61, 0.25);
   }
 
   .modal h2 {
@@ -851,6 +833,7 @@
     letter-spacing: -0.02em;
     font-weight: 500;
     color: var(--ink);
+    font-style: italic;
   }
 
   .modal p.modal-sub {
@@ -895,7 +878,7 @@
     font-family: inherit;
     font-size: 13px;
     color: var(--ink);
-    border-radius: 2px;
+    border-radius: 3px;
     outline: none;
     transition: border-color 0.2s;
   }
@@ -936,13 +919,13 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 3px;
     transition: all 0.2s;
     border: 1px solid transparent;
   }
 
-  .btn-primary { background: var(--ink); color: var(--bg-card); }
-  .btn-primary:hover { background: var(--accent); }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: var(--accent-deep); }
 
   .btn-secondary {
     background: transparent;
@@ -950,60 +933,213 @@
     border-color: var(--line);
   }
 
-  .btn-secondary:hover { border-color: var(--ink-soft); color: var(--ink); }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent-deep); }
 
   .btn-danger {
     background: transparent;
-    color: var(--accent);
-    border-color: var(--accent);
+    color: var(--accent-deep);
+    border-color: var(--accent-deep);
     margin-right: auto;
   }
 
-  .btn-danger:hover { background: var(--accent); color: white; }
+  .btn-danger:hover { background: var(--accent-deep); color: white; }
 
   .recipe-actions {
     position: absolute;
-    top: 28px;
+    top: 36px;
     right: 0;
     display: flex;
     gap: 8px;
+    z-index: 2;
   }
 
   .icon-btn {
-    background: transparent;
+    background: var(--bg-card);
     border: 1px solid var(--line);
     color: var(--ink-soft);
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 13px;
     transition: all 0.2s;
   }
 
-  .icon-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
+  .icon-btn:hover { border-color: var(--accent); color: var(--accent-deep); }
 
-  .cook-btn {
-    background: var(--ink);
-    color: var(--bg-card);
-    border-color: var(--ink);
-  }
-  .cook-btn:hover {
+  .icon-btn.cook-btn {
     background: var(--accent);
     border-color: var(--accent);
     color: white;
+    font-size: 11px;
+    padding-left: 2px;
   }
 
-  /* Inline timer button in step body */
+  .icon-btn.cook-btn:hover {
+    background: var(--accent-deep);
+    border-color: var(--accent-deep);
+  }
+
+  .icon-btn.edit-btn {
+    background: var(--rose);
+    border-color: var(--rose);
+    color: white;
+  }
+
+  .icon-btn.edit-btn:hover {
+    background: #b8869f;
+    border-color: #b8869f;
+  }
+
+  .loading {
+    padding: 40px;
+    text-align: center;
+    color: var(--ink-faded);
+  }
+
+  .shopping {
+    margin-top: 32px;
+    padding: 24px 28px;
+    background: linear-gradient(135deg, rgba(157, 111, 199, 0.05), rgba(184, 156, 217, 0.04));
+    border: 1px solid var(--line);
+    border-radius: 4px;
+  }
+
+  .shopping-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .shopping-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .shopping-label .count {
+    color: var(--ink-faded);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+
+  .shopping-list {
+    list-style: none;
+    columns: 2;
+    column-gap: 36px;
+  }
+
+  .shopping-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 7px 0;
+    font-size: 14px;
+    border-bottom: 1px dotted var(--line);
+    break-inside: avoid;
+  }
+
+  .shop-amount {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+    min-width: 70px;
+  }
+
+  .shop-name {
+    color: var(--ink-soft);
+    flex: 1;
+  }
+
+  @media (max-width: 700px) {
+    .shopping-list { columns: 1; }
+  }
+
+  .mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 40;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    color: var(--ink);
+    font-size: 16px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(42, 31, 61, 0.12);
+    transition: all 0.2s;
+  }
+
+  .mobile-menu-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent-deep);
+  }
+
+  .mobile-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(42, 31, 61, 0.4);
+    z-index: 49;
+    backdrop-filter: blur(3px);
+  }
+
+  @media (max-width: 700px) {
+    .app,
+    .app.collapsed {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 280px;
+      max-width: 85vw;
+      z-index: 60;
+      transform: translateX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .app.collapsed .sidebar {
+      transform: translateX(-100%);
+    }
+
+    .app.collapsed .mobile-menu-btn {
+      display: flex;
+    }
+
+    .app:not(.collapsed) .mobile-backdrop {
+      display: block;
+    }
+
+    .recipe { padding: 28px 22px 80px; }
+  }
+
+  /* === Inline timer button === */
   .timer-btn {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: var(--ink);
-    color: var(--bg-card);
+    background: var(--accent);
+    color: white;
     border: none;
     border-radius: 100px;
     padding: 2px 10px 2px 8px;
@@ -1015,26 +1151,26 @@
     vertical-align: baseline;
     margin: 0 2px;
   }
-  .timer-btn:hover { background: var(--accent); }
-  .timer-btn.running { background: var(--accent); animation: pulse 2s ease-in-out infinite; }
-  .timer-btn.done { background: var(--olive); animation: none; }
+  .timer-btn:hover { background: var(--accent-deep); }
+  .timer-btn.running { background: var(--accent-deep); animation: pulse 2s ease-in-out infinite; }
+  .timer-btn.done { background: var(--sage); animation: none; }
   .timer-btn::before { content: '⏱'; font-size: 0.85em; margin-right: 2px; }
   .timer-btn.running::before { content: '■'; }
   .timer-btn.done::before { content: '✓'; }
 
   @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(197, 70, 42, 0.5); }
-    50% { box-shadow: 0 0 0 8px rgba(197, 70, 42, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(157, 111, 199, 0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(157, 111, 199, 0); }
   }
 
-  /* Timer popover */
+  /* === Timer popover === */
   .timer-popover {
     position: fixed;
     background: var(--bg-card);
     border: 1px solid var(--line);
     border-radius: 6px;
     padding: 16px 18px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    box-shadow: 0 12px 40px rgba(42, 31, 61, 0.2);
     z-index: 600;
     width: 240px;
     display: none;
@@ -1108,8 +1244,8 @@
   }
   .timer-popover-actions button {
     flex: 1;
-    background: var(--ink);
-    color: var(--bg-card);
+    background: var(--accent);
+    color: white;
     border: none;
     padding: 8px;
     font-family: 'JetBrains Mono', monospace;
@@ -1119,7 +1255,7 @@
     border-radius: 3px;
     cursor: pointer;
   }
-  .timer-popover-actions button:hover { background: var(--accent); }
+  .timer-popover-actions button:hover { background: var(--accent-deep); }
   .timer-popover-actions button.secondary {
     background: transparent;
     color: var(--ink-soft);
@@ -1131,7 +1267,7 @@
     background: transparent;
   }
 
-  /* Floating active timers tray */
+  /* === Floating active timers tray === */
   .timer-tray {
     position: fixed;
     bottom: 16px;
@@ -1144,33 +1280,33 @@
   }
 
   .timer-tray-item {
-    background: var(--ink);
-    color: var(--bg-card);
+    background: var(--accent);
+    color: white;
     padding: 10px 14px;
     border-radius: 100px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
     letter-spacing: 0.05em;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 16px rgba(42, 31, 61, 0.25);
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
     transition: background 0.2s;
   }
-  .timer-tray-item:hover { background: var(--accent); }
-  .timer-tray-item.done { background: var(--olive); animation: pulse 1s ease-in-out infinite; }
+  .timer-tray-item:hover { background: var(--accent-deep); }
+  .timer-tray-item.done { background: var(--sage); animation: pulse 1s ease-in-out infinite; }
   .timer-tray-label {
     font-family: 'Inter Tight', sans-serif;
     font-size: 11px;
-    opacity: 0.75;
+    opacity: 0.85;
     max-width: 110px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
   .timer-tray-close {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.25);
     border: none;
     color: white;
     width: 18px;
@@ -1183,537 +1319,9 @@
     justify-content: center;
     padding: 0;
   }
-  .timer-tray-close:hover { background: rgba(255,255,255,0.35); }
+  .timer-tray-close:hover { background: rgba(255,255,255,0.4); }
 
-  /* === Top-right planner toggle === */
-  .view-toggle {
-    position: fixed;
-    top: 18px;
-    right: 22px;
-    z-index: 30;
-    background: var(--bg-card);
-    color: var(--ink);
-    border: 1px solid var(--line);
-    padding: 8px 14px;
-    border-radius: 100px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  }
-  .view-toggle:hover {
-    background: var(--ink);
-    color: var(--bg-card);
-    border-color: var(--ink);
-  }
-  .view-toggle.active {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-  }
-  .view-toggle::before { content: '▦'; font-size: 12px; }
-
-  .cook-mode.active ~ .view-toggle,
-  body:has(.modal-bg.show) .view-toggle,
-  body:has(.picker-modal.show) .view-toggle { display: none; }
-
-  /* === Planner view === */
-  .planner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 56px 48px 100px;
-    animation: fadeIn 0.5s ease;
-  }
-
-  .planner-header {
-    margin-bottom: 32px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-
-  .planner-title-block { flex: 1; min-width: 220px; }
-
-  .planner-eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-faded);
-    margin-bottom: 10px;
-  }
-
-  .planner-title {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 44px;
-    line-height: 1;
-    letter-spacing: -0.03em;
-    color: var(--ink);
-  }
-
-  .planner-sub {
-    color: var(--ink-soft);
-    margin-top: 8px;
-    font-family: 'Fraunces', serif;
-    font-weight: 300;
-    font-size: 16px;
-  }
-
-  .planner-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .planner-btn {
-    background: var(--ink);
-    color: var(--bg-card);
-    border: none;
-    padding: 10px 16px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    border-radius: 100px;
-    transition: background 0.2s;
-  }
-  .planner-btn:hover { background: var(--accent); }
-  .planner-btn.secondary {
-    background: transparent;
-    color: var(--ink-soft);
-    border: 1px solid var(--line);
-  }
-  .planner-btn.secondary:hover {
-    border-color: var(--ink);
-    color: var(--ink);
-  }
-
-  .planner-grid {
-    display: grid;
-    grid-template-columns: 90px repeat(7, 1fr);
-    gap: 6px;
-  }
-
-  .planner-corner {
-    grid-column: 1;
-  }
-
-  .planner-day-header {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    text-align: center;
-    padding: 6px 4px 12px;
-  }
-
-  .planner-slot-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-faded);
-    padding: 14px 6px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    text-align: right;
-  }
-
-  .planner-cell {
-    background: var(--bg-card);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    min-height: 78px;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    transition: background 0.15s, border-color 0.15s;
-    cursor: pointer;
-    position: relative;
-  }
-
-  .planner-cell.drag-over {
-    background: rgba(197, 70, 42, 0.08);
-    border-color: var(--accent);
-    border-style: dashed;
-  }
-
-  .planner-cell.empty:hover {
-    background: rgba(0,0,0,0.02);
-    border-color: var(--ink-soft);
-  }
-
-  .planner-cell.empty::after {
-    content: '+';
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--line);
-    font-size: 24px;
-    font-family: 'Fraunces', serif;
-    pointer-events: none;
-    transition: color 0.15s;
-  }
-  .planner-cell.empty:hover::after { color: var(--ink-soft); }
-
-  .planner-meal {
-    background: white;
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    padding: 6px 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    font-size: 12px;
-    line-height: 1.2;
-    position: relative;
-  }
-
-  .planner-meal-title {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    color: var(--ink);
-    padding-right: 16px;
-    word-break: break-word;
-  }
-
-  .planner-meal-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    color: var(--ink-faded);
-    letter-spacing: 0.04em;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .planner-meal-portions {
-    background: transparent;
-    border: 1px solid var(--line);
-    border-radius: 100px;
-    padding: 1px 6px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    color: var(--ink);
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
-  .planner-meal-portions:hover { border-color: var(--ink); }
-
-  .planner-meal-remove {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 16px;
-    height: 16px;
-    background: transparent;
-    border: none;
-    color: var(--ink-faded);
-    cursor: pointer;
-    font-size: 14px;
-    line-height: 1;
-    padding: 0;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-  .planner-meal:hover .planner-meal-remove { opacity: 1; }
-  .planner-meal-remove:hover { color: var(--accent); }
-
-  .planner-day-total {
-    background: transparent;
-    border-top: 1px solid var(--line);
-    border-radius: 0;
-    padding: 8px 6px 0;
-    text-align: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    color: var(--ink-soft);
-    letter-spacing: 0.04em;
-    line-height: 1.3;
-  }
-
-  .planner-day-total.over { color: var(--accent); }
-
-  .planner-day-total-kcal {
-    font-family: 'Fraunces', serif;
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--ink);
-    display: block;
-    margin-bottom: 2px;
-    letter-spacing: -0.01em;
-  }
-
-  .planner-day-total .macros {
-    background: transparent;
-    border: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .planner-week-total {
-    margin-top: 22px;
-    padding: 22px 28px;
-    background: var(--bg-card);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    display: grid;
-    grid-template-columns: 1fr repeat(4, auto);
-    gap: 28px;
-    align-items: center;
-  }
-
-  .planner-week-total-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink);
-  }
-
-  .planner-week-total-item {
-    text-align: center;
-  }
-
-  .planner-week-total-item .v {
-    font-family: 'Fraunces', serif;
-    font-size: 24px;
-    font-weight: 500;
-    color: var(--ink);
-    letter-spacing: -0.01em;
-    display: block;
-  }
-  .planner-week-total-item .v small {
-    font-size: 12px;
-    color: var(--ink-faded);
-    font-weight: 400;
-    margin-left: 2px;
-  }
-  .planner-week-total-item .l {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-faded);
-    margin-top: 4px;
-  }
-
-  /* Recipes in sidebar become draggable */
-  .recipe-item {
-    -webkit-user-select: none;
-    user-select: none;
-  }
-  .recipe-item.dragging { opacity: 0.4; }
-
-  /* Mobile picker modal for adding a meal */
-  .picker-modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(31, 26, 20, 0.5);
-    backdrop-filter: blur(4px);
-    z-index: 400;
-    display: none;
-    align-items: flex-end;
-    justify-content: center;
-  }
-  .picker-modal.show { display: flex; }
-  .picker-panel {
-    background: var(--bg-card);
-    width: 100%;
-    max-width: 540px;
-    max-height: 80vh;
-    border-radius: 16px 16px 0 0;
-    padding: 22px 22px 28px;
-    overflow-y: auto;
-    animation: slideUp 0.25s ease;
-  }
-  @keyframes slideUp {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
-  }
-  .picker-title {
-    font-family: 'Fraunces', serif;
-    font-size: 22px;
-    font-weight: 500;
-    margin-bottom: 4px;
-    color: var(--ink);
-  }
-  .picker-sub {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-faded);
-    margin-bottom: 16px;
-  }
-  .picker-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-  .picker-item {
-    padding: 12px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.15s;
-    border: 1px solid transparent;
-  }
-  .picker-item:hover { background: rgba(0,0,0,0.04); border-color: var(--line); }
-  .picker-item-title {
-    font-family: 'Fraunces', serif;
-    font-size: 15px;
-    color: var(--ink);
-    font-weight: 500;
-  }
-  .picker-item-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--ink-faded);
-    margin-top: 2px;
-    letter-spacing: 0.04em;
-  }
-  .picker-close {
-    background: transparent;
-    border: 1px solid var(--line);
-    color: var(--ink-soft);
-    padding: 8px 14px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border-radius: 100px;
-    cursor: pointer;
-    margin-top: 14px;
-    width: 100%;
-  }
-
-  /* Shopping list modal */
-  .week-shopping-modal { background: var(--bg-card); padding: 28px; border-radius: 4px; max-width: 720px; width: 92%; max-height: 88vh; overflow-y: auto; }
-  .week-shopping-modal h2 {
-    font-family: 'Fraunces', serif;
-    font-size: 28px;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    margin-bottom: 4px;
-    color: var(--ink);
-  }
-  .week-shopping-modal .sub {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-faded);
-    margin-bottom: 22px;
-  }
-  .week-shopping-modal ul { list-style: none; }
-  .week-shopping-modal li {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    padding: 9px 0;
-    border-bottom: 1px dotted var(--line);
-    font-size: 14px;
-  }
-  .week-shopping-modal li:last-child { border-bottom: none; }
-  .week-shopping-modal .amt {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    color: var(--ink);
-    min-width: 90px;
-  }
-  .week-shopping-modal .nm { color: var(--ink-soft); flex: 1; }
-
-  @media (max-width: 1100px) {
-    .planner-grid { grid-template-columns: 70px repeat(7, 1fr); }
-    .planner-cell { padding: 6px; min-height: 70px; }
-    .planner-meal { font-size: 11px; padding: 5px 6px; }
-    .planner-day-header { font-size: 9px; padding-bottom: 8px; }
-    .planner-slot-label { font-size: 9px; padding: 10px 4px; }
-  }
-
-  @media (max-width: 768px) {
-    .planner { padding: 70px 16px 100px; }
-    .planner-title { font-size: 32px; }
-    .planner-header { gap: 16px; }
-
-    /* Stack as day-by-day list on mobile rather than 7-col grid */
-    .planner-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .planner-corner, .planner-day-header, .planner-slot-label { display: none; }
-
-    .planner-day-card {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 6px;
-      padding: 14px;
-      background: var(--bg-card);
-      border: 1px solid var(--line);
-      border-radius: 6px;
-    }
-    .planner-day-card-header {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink);
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 4px;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-    .planner-day-card-header .total-mini {
-      font-family: 'Fraunces', serif;
-      font-size: 13px;
-      color: var(--ink-soft);
-      text-transform: none;
-      letter-spacing: 0;
-    }
-    .planner-slot-row {
-      display: grid;
-      grid-template-columns: 70px 1fr;
-      gap: 8px;
-      align-items: stretch;
-    }
-    .planner-slot-row-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--ink-faded);
-      display: flex;
-      align-items: center;
-    }
-    .planner-cell { min-height: 54px; }
-
-    .planner-week-total {
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      padding: 16px 18px;
-    }
-    .planner-week-total-label { grid-column: 1 / -1; }
-
-    .view-toggle { top: 12px; right: 14px; padding: 7px 12px; font-size: 9px; }
-  }
-
-  /* "Start a timer" button in recipe header */
+  /* === "Start a timer" button === */
   .timer-start-btn {
     background: transparent;
     border: 1px solid var(--line);
@@ -1731,12 +1339,12 @@
     transition: all 0.2s;
   }
   .timer-start-btn:hover {
-    border-color: var(--ink);
-    color: var(--ink);
+    border-color: var(--accent);
+    color: var(--accent-deep);
   }
   .timer-start-btn::before { content: '⏱'; font-size: 11px; }
 
-  /* Cook mode overlay */
+  /* === Cook mode overlay === */
   .cook-mode {
     position: fixed;
     inset: 0;
@@ -1763,6 +1371,7 @@
     font-weight: 500;
     color: var(--ink);
     letter-spacing: -0.01em;
+    font-style: italic;
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1786,13 +1395,13 @@
     transition: all 0.2s;
   }
   .cook-close:hover, .cook-wake:hover {
-    border-color: var(--ink);
-    color: var(--ink);
+    border-color: var(--accent);
+    color: var(--accent-deep);
   }
   .cook-wake.on {
-    background: var(--olive);
+    background: var(--sage);
     color: white;
-    border-color: var(--olive);
+    border-color: var(--sage);
   }
 
   .cook-progress {
@@ -1847,7 +1456,7 @@
   }
 
   .cook-step-body strong {
-    color: var(--ink);
+    color: var(--accent-deep);
     font-weight: 600;
   }
 
@@ -1868,8 +1477,8 @@
 
   .cook-nav-btn {
     flex: 1;
-    background: var(--ink);
-    color: var(--bg-card);
+    background: var(--accent);
+    color: white;
     border: none;
     padding: 18px 24px;
     font-family: 'JetBrains Mono', monospace;
@@ -1880,7 +1489,7 @@
     border-radius: 4px;
     transition: background 0.2s;
   }
-  .cook-nav-btn:hover:not(:disabled) { background: var(--accent); }
+  .cook-nav-btn:hover:not(:disabled) { background: var(--accent-deep); }
   .cook-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
   .cook-nav-btn.secondary {
     background: transparent;
@@ -1888,7 +1497,8 @@
     border: 1px solid var(--line);
   }
   .cook-nav-btn.secondary:hover:not(:disabled) {
-    border-color: var(--ink);
+    border-color: var(--accent);
+    color: var(--accent-deep);
     background: transparent;
   }
   .cook-nav-counter {
@@ -1909,78 +1519,22 @@
     .cook-title { font-size: 15px; }
   }
 
-  .loading {
-    padding: 40px;
-    text-align: center;
-    color: var(--ink-faded);
-  }
-
-  .mobile-menu-btn {
-    display: none;
-    position: fixed;
-    top: 14px;
-    left: 14px;
-    z-index: 200;
-    width: 42px;
-    height: 42px;
-    background: var(--ink);
-    color: var(--bg-card);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.25);
-  }
-
-  .mobile-backdrop {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(31, 26, 20, 0.5);
-    z-index: 40;
-    backdrop-filter: blur(2px);
-  }
-
-  @media (max-width: 768px) {
-    .app, .app.collapsed { grid-template-columns: 1fr; }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 280px;
-      height: 100vh;
-      z-index: 50;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-      box-shadow: 4px 0 20px rgba(0,0,0,0.15);
-    }
-
-    /* On mobile, the drawer is always full-content. Ignore any collapsed state. */
-    .app.collapsed .sidebar-content { opacity: 1; pointer-events: auto; }
-
-    .app.mobile-open .sidebar { transform: translateX(0); }
-    .app.mobile-open .mobile-backdrop { display: block; }
-
-    .sidebar-toggle { display: none; }
-    .mobile-menu-btn { display: flex; }
-
+  @media (max-width: 900px) {
     .recipe-body { grid-template-columns: 1fr; gap: 30px; }
-    .recipe { padding: 64px 22px 80px; }
-    .recipe-title { font-size: 38px; }
+    .recipe { padding: 36px 28px 80px; }
+    .recipe-title { font-size: 40px; }
     .recipe-stats { grid-template-columns: repeat(2, 1fr); }
     .macros-grid { grid-template-columns: 1fr; gap: 12px; }
-    .subs-grid { gap: 8px; }
-    .recipe-actions { top: 32px; right: 0; }
+    .sub-item { grid-template-columns: 1fr; gap: 2px; }
+    .sub-arrow { display: none; }
   }
+
 </style>
 </head>
 <body>
 
 <div class="app" id="app">
-  <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
+  <button class="mobile-menu-btn" id="mobileMenuBtn" title="Open menu" aria-label="Open menu">☰</button>
   <div class="mobile-backdrop" id="mobileBackdrop"></div>
 
   <aside class="sidebar">
@@ -1988,13 +1542,19 @@
 
     <div class="sidebar-content">
       <div class="brand">
-        <div class="brand-mark">Volume 01 · build 17</div>
-        <div class="brand-title">David's Dishes</div>
-        <div class="brand-sub">a private collection</div>
+        <div class="brand-mark">Volume 02</div>
+        <div class="brand-title">Violeta Cooks</div>
+        <div class="brand-sub">a working collection</div>
       </div>
 
-      <div class="search">
-        <input type="text" id="searchInput" placeholder="Search...">
+      <div class="search-row">
+        <div class="search">
+          <input type="text" id="searchInput" placeholder="Search...">
+        </div>
+        <div class="search-actions">
+          <button class="btn-add" onclick="openModal()" title="New recipe">+</button>
+          <button class="btn-export" onclick="exportData()" title="Export all">↓</button>
+        </div>
       </div>
 
       <div class="tags" id="tagFilters"></div>
@@ -2002,38 +1562,10 @@
       <div class="recipe-list" id="recipeList">
         <div class="loading">Loading...</div>
       </div>
-
-      <div class="sidebar-footer">
-        <button class="btn-add" onclick="openModal()">+ New</button>
-        <button class="btn-export" onclick="exportData()" title="Export all">↓</button>
-      </div>
     </div>
   </aside>
 
   <main class="main" id="main"></main>
-
-  <button class="view-toggle" id="viewToggle" onclick="toggleView()" title="Switch between recipes and planner">Planner</button>
-</div>
-
-<div class="picker-modal" id="pickerModal">
-  <div class="picker-panel">
-    <div class="picker-title">Add a meal</div>
-    <div class="picker-sub" id="pickerSub">Tap a recipe to add</div>
-    <ul class="picker-list" id="pickerList"></ul>
-    <button class="picker-close" onclick="closePicker()">Cancel</button>
-  </div>
-</div>
-
-<div class="modal-bg" id="weekShoppingModal">
-  <div class="week-shopping-modal">
-    <h2>Weekly shopping list</h2>
-    <div class="sub" id="weekShoppingSub">All planned meals combined</div>
-    <ul id="weekShoppingList"></ul>
-    <div class="modal-actions">
-      <button class="btn btn-secondary" onclick="closeWeekShopping()">Close</button>
-      <button class="btn btn-primary" onclick="copyWeekShopping()">Copy to clipboard</button>
-    </div>
-  </div>
 </div>
 
 <div class="timer-popover" id="timerPopover">
@@ -2084,7 +1616,7 @@
 
     <div class="form-field">
       <label>Title</label>
-      <input type="text" id="f-title" placeholder="e.g. Mediterranean Tray Bake">
+      <input type="text" id="f-title" placeholder="e.g. Spring Pea Risotto">
     </div>
 
     <div class="form-field">
@@ -2110,7 +1642,7 @@
       </div>
       <div class="form-field">
         <label>Tags (comma separated)</label>
-        <input type="text" id="f-tags" placeholder="mediterranean, high-protein, one-pan">
+        <input type="text" id="f-tags" placeholder="vegetarian, comforting, weeknight">
       </div>
     </div>
 
@@ -2131,13 +1663,13 @@
 
     <div class="form-field">
       <label>Ingredients</label>
-      <textarea id="f-ingredients" placeholder="One per line. Group with headings ending in a colon:&#10;Tray:&#10;1kg chicken thighs&#10;250g baby tomatoes&#10;Marinade:&#10;2 tbsp olive oil"></textarea>
+      <textarea id="f-ingredients" placeholder="One per line. Group with headings ending in a colon:&#10;Bowl:&#10;200g basmati rice&#10;400g chicken breast&#10;Dressing:&#10;2 tbsp tahini"></textarea>
       <div class="hint">Lines ending in ":" become group headings.</div>
     </div>
 
     <div class="form-field">
       <label>Method</label>
-      <textarea id="f-method" placeholder="One step per line. Format: Title | Description&#10;Marinate | Whisk the marinade. Toss with chicken. Rest 30 minutes."></textarea>
+      <textarea id="f-method" placeholder="One step per line. Format: Title | Description&#10;Prep | Slice the onion thinly. Mince the garlic. Set aside."></textarea>
       <div class="hint">Use "Title | Body" to split heading from description.</div>
     </div>
 
@@ -2161,50 +1693,260 @@
 </div>
 
 <script>
-  // Surface any JS error visibly instead of hanging
-  window.onerror = function(msg, src, line) {
-    var el = document.getElementById('recipeList');
-    if (el) el.innerHTML = '<div style="padding:30px 22px;color:#c5462a;font-size:12px;">Error: ' + msg + ' (line ' + line + ')</div>';
-    return false;
-  };
-
-  const MACRO_TARGET = { carbs: 45, protein: 30, fat: 25 };
+  const MACRO_TARGET = { carbs: 40, protein: 30, fat: 30 };
 
   const SEED_RECIPES = [
     {
-      id: 'med-tray-bake',
-      titlePlain: 'Mediterranean Tray Bake',
-      description: 'Lemony, paprika-warmed chicken thighs over jammy tomatoes, courgettes and peppers, finished with orzo cooked right in the tray. One pan, big sun-drenched flavour.',
+      id: 'coconut-lime-chilli-chicken-brothy-rice',
+      titlePlain: 'Coconut Lime Chilli Chicken Brothy Rice',
+      description: 'Marinated chicken in a bright lime, chilli and coconut broth, ladled over fluffy basmati rice with wilted pak choi. Quick, fragrant and packed with flavour.',
+      servings: 4,
+      time: 45,
+      calories: 500,
+      protein: 36,
+      carbs: 50,
+      fat: 17,
+      tags: ['asian', 'high-protein', 'brothy'],
+      ingredientGroups: [
+        {
+          name: 'Chicken and marinade',
+          items: [
+            { amount: '600', unit: 'g', name: 'chicken thighs (boneless, skinless), sliced into strips' },
+            { amount: '1', unit: 'tbsp', name: 'oyster sauce' },
+            { amount: '1', unit: 'tbsp', name: 'light soy sauce' },
+            { amount: '1', unit: 'tsp', name: 'dark soy sauce' },
+            { amount: '1', unit: 'tsp', name: 'ginger puree' }
+          ]
+        },
+        {
+          name: 'Broth',
+          items: [
+            { amount: '400', unit: 'ml', name: 'chicken stock' },
+            { amount: '200', unit: 'ml', name: 'light coconut milk' },
+            { amount: '200', unit: 'g', name: 'pak choi (1 head), trimmed and halved' },
+            { amount: '4', unit: '', name: 'garlic cloves, sliced' },
+            { amount: '2', unit: '', name: 'spring onions, sliced (whites and greens separated)' },
+            { amount: '1', unit: '', name: 'red chilli, sliced' },
+            { amount: '', unit: '', name: '2cm fresh ginger, julienned' },
+            { amount: '1', unit: 'tbsp', name: 'Shaoxing rice wine' },
+            { amount: '1', unit: 'tbsp', name: 'light soy sauce' },
+            { amount: '1', unit: 'tsp', name: 'chilli oil' },
+            { amount: '', unit: '', name: 'Splash of fish sauce' },
+            { amount: '', unit: '', name: 'Juice of 1/2 lime' },
+            { amount: '1', unit: 'tsp', name: 'neutral oil (for frying)' }
+          ]
+        },
+        {
+          name: 'Rice',
+          items: [
+            { amount: '240', unit: 'g', name: 'basmati rice (dry weight)' }
+          ]
+        },
+        {
+          name: 'To serve',
+          items: [
+            { amount: '', unit: '', name: 'Fresh coriander, chopped' },
+            { amount: '', unit: '', name: 'Extra red chilli, sliced' }
+          ]
+        }
+      ],
+      method: [
+        { title: 'Marinate the chicken', body: 'Toss the chicken strips with the oyster sauce, light soy, dark soy and ginger puree. Leave to marinate for at least <strong>20 minutes</strong>.' },
+        { title: 'Cook the rice', body: 'Rinse the basmati until the water runs clear. Cook in plenty of salted water for <strong>10 to 12 minutes</strong> until tender, then drain.' },
+        { title: 'Start the broth', body: 'Heat the neutral oil in a wide pan or wok. Add the garlic, ginger, chilli and the white parts of the spring onions. Fry for <strong>1 minute</strong>, then pour in the Shaoxing wine and let it bubble away.' },
+        { title: 'Add the liquids', body: 'Pour in the chicken stock and coconut milk. Stir in the chilli oil, lime juice, fish sauce and light soy. Bring to a gentle simmer.' },
+        { title: 'Cook the chicken', body: 'Drop the marinated chicken into the broth and simmer for <strong>7 to 8 minutes</strong>, until cooked through.' },
+        { title: 'Wilt the greens', body: 'Add the pak choi for the last <strong>2 minutes</strong>, so it wilts but keeps a little bite.' },
+        { title: 'Serve', body: 'Spoon rice into deep bowls. Ladle over plenty of chicken and brothy coconut sauce. Top with coriander, the green spring onion tops, and extra sliced chilli.' }
+      ],
+      notes: 'Best eaten straight away while the broth is hot and the pak choi is bright. Leftovers keep for 1 day in the fridge but the rice can dry out, so add a splash of stock when reheating.',
+      substitutes: [
+        { from: '600g chicken thighs', to: '550g chicken breast (cook 5-6 min) or 550g firm tofu, cubed' },
+        { from: '240g basmati rice', to: '240g jasmine rice, or 200g rice noodles (cook separately)' },
+        { from: '200ml light coconut milk', to: '150ml full-fat coconut milk (richer, similar calories)' },
+        { from: '200g pak choi', to: '200g baby spinach, 200g broccolini, or 200g shredded cabbage' },
+        { from: 'Splash fish sauce', to: '1 tbsp light soy + pinch of sugar' },
+        { from: '1 tsp chilli oil', to: '1/2 tsp chilli flakes + 1 tsp neutral oil' }
+      ]
+    },
+    {
+      id: 'higher-protein-burger-bowl',
+      titlePlain: 'Higher-Protein Burger Bowl',
+      description: 'A deconstructed burger over crispy air-fryer potatoes, finished with a tangy yogurt-mayo burger sauce. All the flavour, none of the bun.',
+      servings: 4,
+      time: 35,
+      calories: 505,
+      protein: 38,
+      carbs: 50,
+      fat: 16,
+      tags: ['american', 'high-protein', 'weeknight'],
+      ingredientGroups: [
+        {
+          name: 'Bowl',
+          items: [
+            { amount: '900', unit: 'g', name: 'potatoes, cut into bite-size pieces' },
+            { amount: '1', unit: 'tbsp', name: 'avocado oil (or olive oil)' },
+            { amount: '1', unit: 'tsp', name: 'fine sea salt' },
+            { amount: '450', unit: 'g', name: 'lean ground beef (5% fat)' },
+            { amount: '50', unit: 'g', name: 'shredded cheddar' }
+          ]
+        },
+        {
+          name: 'Burger sauce',
+          items: [
+            { amount: '250', unit: 'g', name: 'plain Greek yogurt (0% fat)' },
+            { amount: '1', unit: 'tbsp', name: 'mayonnaise' },
+            { amount: '2', unit: 'tbsp', name: 'ketchup' },
+            { amount: '1', unit: 'tbsp', name: 'yellow mustard' },
+            { amount: '1', unit: 'tsp', name: 'white wine vinegar' },
+            { amount: '30', unit: 'g', name: 'dill pickles, finely chopped' }
+          ]
+        },
+        {
+          name: 'Toppings',
+          items: [
+            { amount: '100', unit: 'g', name: 'baby gem lettuce, shredded' },
+            { amount: '200', unit: 'g', name: 'tomatoes, diced' },
+            { amount: '50', unit: 'g', name: 'pickles, sliced' },
+            { amount: '100', unit: 'g', name: 'red onion, thinly sliced (or grilled)' },
+            { amount: '100', unit: 'g', name: 'sauerkraut' }
+          ]
+        }
+      ],
+      method: [
+        { title: 'Heat the air fryer', body: 'Preheat to <strong>200°C</strong>. Toss the potato pieces with the oil and salt.' },
+        { title: 'Crisp the potatoes', body: 'Cook for <strong>20 to 25 minutes</strong>, shaking halfway through, until deeply golden and crisp.' },
+        { title: 'Brown the beef', body: 'Heat a wide frying pan over high heat. Add the ground beef and cook, breaking it apart, until well browned. Season generously with salt and pepper.' },
+        { title: 'Melt the cheese', body: 'Scatter the cheddar over the hot beef and cover with a lid for <strong>30 seconds</strong>, until just melted.' },
+        { title: 'Make the sauce', body: 'Whisk the yogurt, mayo, ketchup, mustard, vinegar and chopped pickles together in a bowl. Taste and adjust the seasoning.' },
+        { title: 'Build the bowls', body: 'Divide the crispy potatoes between bowls. Top with the cheesy beef, then pile on the lettuce, tomatoes, pickles, onions and sauerkraut.' },
+        { title: 'Finish', body: 'Spoon over the burger sauce, or serve on the side for dipping.' }
+      ],
+      notes: 'The burger sauce is best made an hour ahead so the flavours mingle. It keeps in the fridge for 5 days. Meal-prep the potatoes and beef and add fresh toppings on serving day for a quick lunch.',
+      substitutes: [
+        { from: '450g lean ground beef', to: '450g ground turkey, 450g ground chicken, or 400g plant-based mince' },
+        { from: '900g potatoes', to: '900g sweet potatoes, or 220g brown rice (dry weight)' },
+        { from: '50g cheddar', to: '50g feta, 50g smoked gouda, or 80g halloumi (cubed, pan-fried)' },
+        { from: '250g Greek yogurt', to: '250g skyr, or 200g sour cream (higher in fat)' },
+        { from: '100g sauerkraut', to: '100g kimchi, or extra pickles' },
+        { from: '1 tbsp yellow mustard', to: '1 tbsp Dijon, or 1 tsp English mustard for more bite' }
+      ]
+    },
+    {
+      id: 'one-pan-chicken-shawarma',
+      titlePlain: 'One-Pan Chicken Shawarma with Roasted Garlic Sauce',
+      description: 'Smoky, tangy shawarma-spiced chicken roasted on a single tray with red onions, served over fluffy basmati and finished with a mellow roasted garlic yogurt sauce.',
+      servings: 4,
+      time: 50,
+      calories: 515,
+      protein: 37,
+      carbs: 52,
+      fat: 17,
+      tags: ['middle-eastern', 'high-protein', 'one-pan'],
+      ingredientGroups: [
+        {
+          name: 'Chicken and marinade',
+          items: [
+            { amount: '580', unit: 'g', name: 'chicken thighs (boneless, skinless)' },
+            { amount: '60', unit: 'g', name: 'plain Greek yogurt (0% fat)' },
+            { amount: '1', unit: 'tsp', name: 'olive oil' },
+            { amount: '2', unit: 'tbsp', name: 'tomato paste' },
+            { amount: '1', unit: '', name: 'lemon, juiced' },
+            { amount: '5', unit: '', name: 'garlic cloves, minced' },
+            { amount: '1', unit: 'tbsp', name: 'ground cumin' },
+            { amount: '2', unit: 'tsp', name: 'paprika' },
+            { amount: '2', unit: 'tsp', name: 'chilli powder' },
+            { amount: '1', unit: 'tsp', name: 'ground turmeric' },
+            { amount: '1', unit: 'tsp', name: 'onion powder' },
+            { amount: '1', unit: 'tsp', name: 'black pepper' },
+            { amount: '1', unit: 'tsp', name: 'fine sea salt' }
+          ]
+        },
+        {
+          name: 'Tray',
+          items: [
+            { amount: '150', unit: 'g', name: 'red onion, cut into chunks' },
+            { amount: '1', unit: '', name: 'head of garlic, top sliced off' },
+            { amount: '1', unit: 'tsp', name: 'olive oil (for the garlic)' }
+          ]
+        },
+        {
+          name: 'Rice',
+          items: [
+            { amount: '210', unit: 'g', name: 'basmati rice (dry weight)' }
+          ]
+        },
+        {
+          name: 'Roasted garlic sauce',
+          items: [
+            { amount: '120', unit: 'g', name: 'plain Greek yogurt (0% fat)' },
+            { amount: '1', unit: 'tbsp', name: 'mayonnaise' },
+            { amount: '', unit: '', name: 'Juice of 1/2 lemon' },
+            { amount: '0.5', unit: 'tsp', name: 'black pepper' },
+            { amount: '2', unit: 'tbsp', name: 'fresh parsley, finely chopped' }
+          ]
+        },
+        {
+          name: 'To serve',
+          items: [
+            { amount: '', unit: '', name: 'Fresh parsley, chopped' },
+            { amount: '', unit: '', name: 'Lemon wedges' }
+          ]
+        }
+      ],
+      method: [
+        { title: 'Marinate the chicken', body: 'Whisk the yogurt, olive oil, tomato paste, lemon juice, garlic and all the spices in a large bowl. Toss the chicken thighs through to coat. Leave for at least <strong>30 minutes</strong>, or overnight in the fridge.' },
+        { title: 'Heat the oven', body: 'Preheat to <strong>200°C fan</strong> (220°C conventional).' },
+        { title: 'Wrap the garlic', body: 'Sit the whole garlic head on a small square of foil. Drizzle with the 1 tsp olive oil and a pinch of salt, then twist the foil closed.' },
+        { title: 'Build the tray', body: 'Scatter the red onion chunks across a large roasting tray. Lay the marinated chicken thighs on top in a single layer. Tuck the foil-wrapped garlic into a corner of the tray.' },
+        { title: 'Cook the rice', body: 'While the chicken roasts, rinse and cook the basmati in salted water for <strong>10 to 12 minutes</strong> until tender. Drain.' },
+        { title: 'Roast', body: 'Bake the tray for <strong>30 to 35 minutes</strong>, until the chicken is deeply caramelised and cooked through.' },
+        { title: 'Make the sauce', body: 'Squeeze the soft roasted garlic cloves into a bowl. Mash to a paste. Whisk in the Greek yogurt, mayo, lemon juice, pepper and chopped parsley.' },
+        { title: 'Serve', body: 'Pile rice onto plates. Top with the shawarma chicken and onions. Spoon over generous swooshes of the garlic sauce. Finish with extra parsley and lemon wedges.' }
+      ],
+      notes: 'This makes excellent next-day wraps. Shred the leftover chicken and stuff into warm pittas with extra sauce and some pickled red onions. Keeps in the fridge for 3 days.',
+      substitutes: [
+        { from: '580g chicken thighs', to: '550g chicken breast (reduce roast by 5-7 min), or 600g firm tofu (press first)' },
+        { from: '210g basmati rice', to: '210g brown rice (cook longer), 260g couscous (cooked separately), or 4 wholemeal pittas' },
+        { from: '1 tbsp mayo', to: '30g extra Greek yogurt (cuts about 80 kcal across the recipe)' },
+        { from: '1 head roasted garlic', to: '1 tbsp shop-bought roasted garlic paste' },
+        { from: '60g Greek yogurt (marinade)', to: '60g plant-based yogurt for dairy-free' }
+      ]
+    },
+    {
+      id: 'greek-chicken-traybake',
+      titlePlain: 'Greek Chicken Traybake',
+      description: 'Lemony, paprika-warmed chicken thighs over jammy tomatoes, courgettes and peppers, with orzo cooked right in the tray. One pan, sun-drenched flavour.',
       servings: 6,
       time: 60,
-      calories: 650,
-      protein: 50,
-      carbs: 70,
-      fat: 18,
+      calories: 500,
+      protein: 36,
+      carbs: 49,
+      fat: 17,
       tags: ['mediterranean', 'high-protein', 'one-pan'],
       ingredientGroups: [
         {
           name: 'Tray',
           items: [
-            { amount: '1000', unit: 'g', name: 'chicken thighs' },
-            { amount: '360', unit: 'g', name: 'orzo (dry weight)' },
+            { amount: '800', unit: 'g', name: 'chicken thighs (boneless, skinless)' },
+            { amount: '300', unit: 'g', name: 'orzo (dry weight)' },
             { amount: '900', unit: 'ml', name: 'chicken stock, hot' },
             { amount: '250', unit: 'g', name: 'baby tomatoes' },
-            { amount: '200', unit: 'g', name: 'sweet mini peppers, sliced roughly (or normal peppers)' },
-            { amount: '3', unit: '', name: 'small red onions, chopped' },
-            { amount: '2', unit: '', name: 'courgettes, cut into rounds' },
+            { amount: '200', unit: 'g', name: 'sweet mini peppers, sliced (or normal peppers)' },
+            { amount: '300', unit: 'g', name: 'red onions (about 3 small), chopped' },
+            { amount: '400', unit: 'g', name: 'courgettes (about 2), cut into rounds' },
+            { amount: '4', unit: '', name: 'whole garlic cloves' },
             { amount: '1', unit: 'tbsp', name: 'mixed herbs' },
             { amount: '1', unit: 'tbsp', name: 'smoked paprika' },
-            { amount: '4', unit: '', name: 'whole garlic cloves' },
-            { amount: '50', unit: 'g', name: 'feta, crumbled' },
-            { amount: '1', unit: 'handful', name: 'kalamata olives' },
-            { amount: '1', unit: 'handful', name: 'freshly chopped parsley' }
+            { amount: '60', unit: 'g', name: 'feta, crumbled' },
+            { amount: '50', unit: 'g', name: 'kalamata olives' },
+            { amount: '', unit: '', name: 'Handful fresh parsley, chopped' }
           ]
         },
         {
           name: 'Marinade',
           items: [
-            { amount: '2', unit: 'tbsp', name: 'olive oil' },
+            { amount: '1', unit: 'tbsp', name: 'olive oil' },
             { amount: '50', unit: 'ml', name: 'lemon juice' },
             { amount: '1', unit: 'tbsp', name: 'minced garlic' },
             { amount: '1', unit: 'tbsp', name: 'smoked paprika' },
@@ -2217,181 +1959,20 @@
         { title: 'Marinate the chicken', body: 'In a large bowl, whisk the marinade ingredients with a good pinch of salt and pepper. Add the chicken thighs, turn to coat, and leave to rest for at least <strong>30 minutes</strong>, or overnight in the fridge if you have the time.' },
         { title: 'Heat the oven', body: 'Preheat to <strong>200°C fan</strong> (220°C conventional). Pull out a large roasting tray.' },
         { title: 'Build the tray', body: 'Tip the onions, courgettes, peppers and whole garlic cloves into the tray. Drizzle with a little olive oil, scatter the mixed herbs and smoked paprika, and toss to coat. Spread out in a single layer.' },
-        { title: 'Add the chicken', body: 'Nestle the marinated chicken thighs skin-side up among the vegetables. Pour over any leftover marinade.' },
-        { title: 'First roast', body: 'Roast for <strong>30 minutes</strong> until the chicken skin is starting to colour and the vegetables are softening.' },
-        { title: 'Add orzo and finish', body: 'Scatter the orzo around the chicken, pour over the hot stock, and add the baby tomatoes and olives. Return to the oven for <strong>15 to 20 minutes</strong>, until the orzo is tender and most of the liquid is absorbed, the chicken is golden and cooked through, and the tomatoes are blistered.' },
-        { title: 'Finish and serve', body: 'Crumble the feta over the hot tray, scatter generously with fresh parsley, and bring straight to the table. A spoonful of yoghurt on the side is excellent.' }
+        { title: 'Add the chicken', body: 'Nestle the marinated chicken thighs among the vegetables. Pour over any leftover marinade.' },
+        { title: 'First roast', body: 'Roast for <strong>30 minutes</strong> until the chicken is starting to colour and the vegetables are softening.' },
+        { title: 'Add orzo and finish', body: 'Scatter the orzo around the chicken, pour over the hot stock, and add the baby tomatoes and olives. Return to the oven for <strong>15 to 20 minutes</strong>, until the orzo is tender and most of the liquid is absorbed.' },
+        { title: 'Finish and serve', body: 'Crumble the feta over the hot tray, scatter generously with parsley, and bring straight to the table. A spoonful of yoghurt on the side is excellent.' }
       ],
-      notes: 'Leftovers keep beautifully for 2 days in the fridge. Reheat gently, or shred the chicken into a grain bowl with the roasted vegetables, a little extra lemon and fresh parsley.',
+      notes: 'Leftovers keep beautifully for 2 days in the fridge. Reheat gently, or shred the chicken into a grain bowl with the roasted vegetables, extra lemon and fresh parsley.',
       substitutes: [
-        { from: '360g orzo', to: '600g new potatoes (cubed, parboil 8 min) or 300g couscous (stir in last 5 min)' },
-        { from: '1000g chicken thighs', to: '800g chicken breast (reduce roast time by 10 min) or 900g firm white fish (add for last 15 min only)' },
-        { from: '50g feta', to: '80g halloumi (cubed, scattered on for the last 10 min)' },
+        { from: '300g orzo', to: '500g new potatoes (cubed, parboil 8 min) or 250g couscous (stir in last 5 min)' },
+        { from: '800g chicken thighs', to: '700g chicken breast (reduce roast by 10 min) or 750g firm white fish (add for last 15 min only)' },
+        { from: '60g feta', to: '80g halloumi (cubed, scattered on for the last 10 min), or 60g goat cheese' },
         { from: '400g courgettes', to: '400g aubergine, 400g fennel wedges, or 350g asparagus' },
         { from: '250g baby tomatoes', to: '250g quartered larger tomatoes, or 80g sun-dried tomatoes for deeper flavour' },
         { from: '50g kalamata olives', to: '50g green olives, 30g capers, or skip if not a fan' },
-        { from: '1 tbsp smoked paprika', to: '1 tbsp sweet paprika + pinch chipotle, or 1 tbsp harissa paste in the marinade' },
-        { from: '15g parsley', to: '15g fresh mint, dill, or basil' }
-      ]
-    },
-    {
-      id: 'gochujang-honey-chicken',
-      titlePlain: 'Gochujang Honey Chicken with Sesame Slaw',
-      description: 'Sticky, spicy-sweet gochujang chicken roasted until lacquered, served over jasmine rice with a sharp sesame and kewpie slaw. A weeknight Korean-style bowl.',
-      servings: 4,
-      time: 55,
-      calories: 640,
-      protein: 49,
-      carbs: 74,
-      fat: 15,
-      tags: ['korean', 'high-protein', 'weeknight'],
-      ingredientGroups: [
-        {
-          name: 'Chicken',
-          items: [
-            { amount: '700', unit: 'g', name: 'chicken breast, boneless skinless, cut into thick strips' }
-          ]
-        },
-        {
-          name: 'Marinade',
-          items: [
-            { amount: '2', unit: 'tbsp', name: 'gochujang' },
-            { amount: '2', unit: 'tbsp', name: 'soy sauce' },
-            { amount: '2', unit: 'tbsp', name: 'honey' },
-            { amount: '0.5', unit: 'tsp', name: 'sesame oil' },
-            { amount: '1', unit: 'tsp', name: 'apple cider vinegar' }
-          ]
-        },
-        {
-          name: 'Rice',
-          items: [
-            { amount: '280', unit: 'g', name: 'jasmine rice (dry)' },
-            { amount: '560', unit: 'ml', name: 'water' }
-          ]
-        },
-        {
-          name: 'Sesame slaw',
-          items: [
-            { amount: '250', unit: 'g', name: 'white cabbage, finely shredded' },
-            { amount: '80', unit: 'g', name: 'red onion, finely sliced (about 1 small)' },
-            { amount: '3', unit: 'tbsp', name: 'kewpie mayo' },
-            { amount: '1', unit: 'tbsp', name: 'roasted sesame kewpie mayo' },
-            { amount: '1', unit: 'tbsp', name: 'soy sauce' },
-            { amount: '1', unit: 'tbsp', name: 'apple cider vinegar' },
-            { amount: '1', unit: 'tbsp', name: 'sesame seeds, toasted' },
-            { amount: '1', unit: '', name: 'lemon wedge, to squeeze' }
-          ]
-        }
-      ],
-      method: [
-        { title: 'Marinate the chicken', body: 'In a bowl, whisk together the gochujang, soy sauce, honey, sesame oil and apple cider vinegar. Add the chicken, toss to coat thoroughly, and rest for at least <strong>30 minutes</strong>, or overnight in the fridge for deeper flavour.' },
-        { title: 'Heat the oven', body: 'Preheat to <strong>190°C fan</strong> (210°C conventional). Line a baking tray with parchment.' },
-        { title: 'Cook the rice', body: 'Rinse the rice under cold water until it runs clear. Combine with the water in a saucepan with a pinch of salt. Bring to a boil, then cover, reduce to a bare simmer, and cook for <strong>12 minutes</strong>. Rest off the heat, lid on, for another <strong>10 minutes</strong>.' },
-        { title: 'Roast the chicken', body: 'Spread the marinated chicken on the lined tray in a single layer, scraping over any extra marinade. Roast for <strong>20 minutes</strong>, until the chicken is sticky, lacquered, and cooked through.' },
-        { title: 'Make the slaw', body: 'While the chicken roasts, combine the cabbage and red onion in a bowl. Whisk the kewpie mayo, sesame kewpie mayo, soy sauce, apple cider vinegar and sesame seeds in a small bowl. Tip over the cabbage, squeeze over the lemon wedge, and toss well.' },
-        { title: 'Serve', body: 'Fluff the rice and divide between bowls. Top with the chicken and any sticky pan juices. Pile the sesame slaw alongside, and finish with extra sesame seeds if you like.' }
-      ],
-      notes: 'The marinade can sit overnight for even better flavour. For extra heat, drizzle a little extra gochujang thinned with water over the finished bowls. Leftovers reheat well in a hot pan with a splash of water to loosen the glaze.',
-      substitutes: [
-        { from: '700g chicken breast', to: '800g chicken thigh boneless skinless (richer, more flavour, slightly more fat) or 800g firm tofu (pressed and cubed)' },
-        { from: '280g jasmine rice', to: '260g short grain rice, 280g basmati, or 320g quinoa (rinse well)' },
-        { from: '2 tbsp gochujang', to: '1 tbsp sriracha + 1 tsp white miso, or 2 tbsp Korean chili paste' },
-        { from: '2 tbsp honey', to: '2 tbsp maple syrup, or 2 tbsp brown sugar loosened with 1 tsp water' },
-        { from: '3 tbsp kewpie mayo', to: '3 tbsp regular mayo + pinch sugar + pinch MSG, or 3 tbsp Greek yogurt + 1 tsp honey for a leaner slaw' },
-        { from: '1 tbsp roasted sesame kewpie mayo', to: '1 tbsp kewpie + 1 tsp extra toasted sesame seeds, or 1 tbsp tahini thinned with water' },
-        { from: '250g cabbage', to: '250g napa cabbage, savoy, or pre-shredded slaw mix' },
-        { from: '80g red onion', to: '4 spring onions, finely sliced, or 80g white onion' }
-      ]
-    },
-    {
-      id: 'middle-eastern-chicken-rice',
-      titlePlain: 'Middle Eastern Chicken & Turmeric Rice',
-      description: 'Spice-rubbed chicken thighs with fragrant turmeric basmati, a sharp sumac salad and a cool garlic yogurt sauce. Halal-cart energy, made on the stovetop.',
-      servings: 4,
-      time: 60,
-      calories: 660,
-      protein: 48,
-      carbs: 72,
-      fat: 20,
-      tags: ['middle-eastern', 'high-protein', 'one-pan'],
-      ingredientGroups: [
-        {
-          name: 'Chicken',
-          items: [
-            { amount: '800', unit: 'g', name: 'chicken thighs, boneless skinless' },
-            { amount: '1', unit: 'tbsp', name: 'olive oil' },
-            { amount: '8', unit: '', name: 'garlic cloves, minced' },
-            { amount: '0.5', unit: '', name: 'lemon, juiced' },
-            { amount: '2', unit: 'tsp', name: 'Better Than Bouillon roasted chicken base' },
-            { amount: '1', unit: 'tbsp', name: 'paprika' },
-            { amount: '1', unit: 'tbsp', name: 'cumin' },
-            { amount: '1', unit: 'tbsp', name: 'onion powder' },
-            { amount: '2', unit: 'tsp', name: 'turmeric' },
-            { amount: '2', unit: 'tsp', name: 'coriander' },
-            { amount: '2', unit: 'tsp', name: 'black pepper' },
-            { amount: '1', unit: 'tsp', name: 'allspice' },
-            { amount: '1', unit: 'tsp', name: 'salt' }
-          ]
-        },
-        {
-          name: 'Turmeric rice',
-          items: [
-            { amount: '1', unit: 'tbsp', name: 'butter' },
-            { amount: '220', unit: 'g', name: 'yellow onion, diced (about 1.5 cups)' },
-            { amount: '1', unit: 'tbsp', name: 'turmeric' },
-            { amount: '2', unit: 'tsp', name: 'paprika' },
-            { amount: '2', unit: 'tsp', name: 'garlic powder' },
-            { amount: '2', unit: 'tsp', name: 'black pepper' },
-            { amount: '300', unit: 'g', name: 'basmati rice (dry), rinsed' },
-            { amount: '600', unit: 'ml', name: 'hot water' },
-            { amount: '3', unit: 'tsp', name: 'Better Than Bouillon roasted chicken base' }
-          ]
-        },
-        {
-          name: 'Sumac salad',
-          items: [
-            { amount: '80', unit: 'g', name: 'red onion, thinly sliced (about half a large)' },
-            { amount: '200', unit: 'g', name: 'cherry tomatoes, quartered' },
-            { amount: '200', unit: 'g', name: 'cucumber, sliced and halved' },
-            { amount: '2', unit: 'tsp', name: 'sumac' },
-            { amount: '1', unit: 'tsp', name: 'salt' },
-            { amount: '1', unit: 'tsp', name: 'black pepper' },
-            { amount: '0.5', unit: 'tsp', name: 'lemon, juiced' }
-          ]
-        },
-        {
-          name: 'Garlic yogurt sauce',
-          items: [
-            { amount: '80', unit: 'g', name: 'plain Greek yogurt' },
-            { amount: '1', unit: 'tbsp', name: 'mayonnaise' },
-            { amount: '3', unit: '', name: 'garlic cloves, grated' },
-            { amount: '1', unit: 'tbsp', name: 'fresh parsley, finely chopped' },
-            { amount: '0.5', unit: '', name: 'lemon, juiced' },
-            { amount: '1', unit: 'tsp', name: 'salt' },
-            { amount: '1', unit: 'tsp', name: 'black pepper' }
-          ]
-        }
-      ],
-      method: [
-        { title: 'Marinate the chicken', body: 'In a bowl, combine the chicken with all the chicken spices, olive oil, minced garlic, lemon juice and Better Than Bouillon. Mix well to coat. Marinate for at least <strong>30 minutes</strong>, or up to overnight in the fridge.' },
-        { title: 'Sear the chicken', body: 'Heat a large pan over medium-high with a drizzle of olive oil. Working in batches so the pan stays hot, cook the chicken for <strong>6 to 8 minutes per side</strong>, until deeply golden and cooked through. Set aside on a plate, loosely covered.' },
-        { title: 'Start the rice', body: 'Reduce the heat to medium-low and add the butter to the same pan, scraping up any sticky bits. Add the diced onion and cook, stirring often, for <strong>5 to 7 minutes</strong> until soft and translucent.' },
-        { title: 'Toast the spices and rice', body: 'Stir in the turmeric, paprika, garlic powder and pepper, and cook for <strong>1 to 2 minutes</strong> until fragrant. Add the rinsed basmati and toast, stirring, for <strong>2 minutes</strong>.' },
-        { title: 'Cook the rice', body: 'Stir the Better Than Bouillon into the hot water, then pour into the pan. Bring to a boil, stir once, then cover and reduce to low. Simmer for <strong>15 minutes</strong>, then rest off the heat, lid on, for <strong>10 minutes</strong>. Fluff with a fork.' },
-        { title: 'Make the sumac salad', body: 'Combine the red onion, cherry tomatoes and cucumber in a bowl. Sprinkle over the sumac, salt and pepper, squeeze on the lemon juice, and toss well.' },
-        { title: 'Make the garlic sauce', body: 'Whisk together the Greek yogurt, mayonnaise, grated garlic, parsley, lemon juice, salt and pepper until smooth. Loosen with a splash of water if needed.' },
-        { title: 'Serve', body: 'Slice or leave the chicken whole. Pile rice into bowls, top with chicken, spoon the sumac salad alongside, and drizzle generously with the garlic sauce.' }
-      ],
-      notes: 'Marinate the chicken the night before for the deepest flavour. The rice reheats beautifully with a splash of water and a knob of butter. If you have it, a pinch of cinnamon in the rice with the spices adds lovely warmth.',
-      substitutes: [
-        { from: '800g chicken thighs', to: '800g chicken breast (leaner, reduce sear time by 2 min), or 700g firm tofu pressed and cubed' },
-        { from: '300g basmati rice', to: '300g jasmine rice, 280g long-grain white rice, or 320g couscous (steam separately)' },
-        { from: '2 tsp Better Than Bouillon (chicken)', to: '1 chicken stock cube crumbled, 1 tbsp white miso, or 200ml chicken stock (reduce water accordingly)' },
-        { from: '80g Greek yogurt', to: '80g labneh, 80g sour cream, or 60g full-fat mayo (richer, fattier sauce)' },
-        { from: '1 tbsp mayonnaise', to: '1 tbsp tahini (nuttier), or skip and add 1 extra tbsp yogurt for leaner sauce' },
-        { from: '2 tsp sumac', to: '1 tsp lemon zest + 1 tsp paprika, or 1 tsp pomegranate molasses drizzled over the salad' },
-        { from: '200g cherry tomatoes', to: '200g vine tomatoes, deseeded and chopped, or 150g sun-dried tomatoes (sliced)' },
-        { from: '200g cucumber', to: '200g radish, thinly sliced, or 150g pickled cucumbers for tang' }
+        { from: '1 tbsp smoked paprika', to: '1 tbsp sweet paprika + pinch chipotle, or 1 tbsp harissa paste in the marinade' }
       ]
     }
   ];
@@ -2404,73 +1985,40 @@
   let editingId = null;
   let sidebarCollapsed = false;
 
-  // Storage wrapper: uses localStorage for standalone use (phones, browsers),
-  // falls back to in-memory if localStorage is blocked.
-  const memoryStore = {};
-  const hasLocalStorage = (() => {
-    try {
-      const t = '__test__';
-      localStorage.setItem(t, t);
-      localStorage.removeItem(t);
-      return true;
-    } catch (e) { return false; }
-  })();
-  const storage = {
-    async get(key) {
-      try {
-        if (hasLocalStorage) {
-          const v = localStorage.getItem(key);
-          return v !== null ? { key, value: v } : null;
-        }
-        return key in memoryStore ? { key, value: memoryStore[key] } : null;
-      } catch (e) { return null; }
-    },
-    async set(key, value) {
-      try {
-        if (hasLocalStorage) localStorage.setItem(key, value);
-        else memoryStore[key] = value;
-        return { key, value };
-      } catch (e) {
-        memoryStore[key] = value;
-        return { key, value };
-      }
-    }
-  };
-
-  const SEED_VERSION = 7;
+  const STORAGE_KEY = 'violeta-cooks-recipes';
+  const DELETED_SEEDS_KEY = 'violeta-cooks-deleted-seeds';
+  const SIDEBAR_KEY = 'violeta-cooks-sidebar';
 
   async function loadRecipes() {
+    let saved = null;
     try {
-      const versionResult = await storage.get('seed-version');
-      const savedVersion = versionResult && versionResult.value ? parseInt(versionResult.value) : 0;
+      const result = await window.storage.get(STORAGE_KEY);
+      if (result && result.value) saved = JSON.parse(result.value);
+    } catch (e) {}
 
-      const result = await storage.get('all-recipes');
-      if (result && result.value && savedVersion >= SEED_VERSION) {
-        recipes = JSON.parse(result.value);
-        return;
-      }
+    let deletedSeeds = [];
+    try {
+      const result = await window.storage.get(DELETED_SEEDS_KEY);
+      if (result && result.value) deletedSeeds = JSON.parse(result.value);
+    } catch (e) {}
 
-      // Either no saved recipes, or seed has been updated. Merge: keep user-added recipes, refresh seeded ones.
-      if (result && result.value) {
-        const existing = JSON.parse(result.value);
-        const seedIds = SEED_RECIPES.map(r => r.id);
-        const userAdded = existing.filter(r => !seedIds.includes(r.id));
-        recipes = [...SEED_RECIPES, ...userAdded];
-      } else {
-        recipes = SEED_RECIPES;
-      }
-    } catch (e) {
-      recipes = SEED_RECIPES;
+    if (saved === null) {
+      // First load: use all seeds
+      recipes = [...SEED_RECIPES];
+    } else {
+      // Returning user: keep their data exactly as is, only add seed recipes they've never seen
+      const savedIds = new Set(saved.map(r => r.id));
+      const deletedSet = new Set(deletedSeeds);
+      const newSeeds = SEED_RECIPES.filter(r => !savedIds.has(r.id) && !deletedSet.has(r.id));
+      recipes = [...saved, ...newSeeds];
     }
     await saveAllRecipes();
-    try {
-      await storage.set('seed-version', String(SEED_VERSION));
-    } catch (e) {}
   }
+
 
   async function saveAllRecipes() {
     try {
-      await storage.set('all-recipes', JSON.stringify(recipes));
+      await window.storage.set(STORAGE_KEY, JSON.stringify(recipes));
     } catch (e) {
       console.error('Save failed:', e);
     }
@@ -2478,16 +2026,21 @@
 
   async function loadSidebarState() {
     try {
-      const result = await storage.get('sidebar-collapsed');
+      const result = await window.storage.get(SIDEBAR_KEY);
       if (result && result.value) {
         sidebarCollapsed = result.value === 'true';
+        return;
       }
     } catch (e) {}
+    // First-time default: collapsed on mobile so the recipe is visible
+    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 700px)').matches) {
+      sidebarCollapsed = true;
+    }
   }
 
   async function saveSidebarState() {
     try {
-      await storage.set('sidebar-collapsed', String(sidebarCollapsed));
+      await window.storage.set(SIDEBAR_KEY, String(sidebarCollapsed));
     } catch (e) {
       console.error('Sidebar state save failed:', e);
     }
@@ -2531,12 +2084,12 @@
 
     const listEl = document.getElementById('recipeList');
     if (filtered.length === 0) {
-      listEl.innerHTML = `<div style="padding: 30px 22px; color: var(--ink-faded); font-size: 13px;">No recipes match.</div>`;
+      listEl.innerHTML = `<div style="padding: 30px 22px; color: var(--ink-faded); font-size: 13px; font-style: italic; font-family: 'Fraunces', serif;">No recipes yet. Add one below.</div>`;
       return;
     }
 
     listEl.innerHTML = filtered.map((r, i) => `
-      <div class="recipe-item ${r.id === activeId ? 'active' : ''}" draggable="true" data-recipe-id="${r.id}" onclick="selectRecipe('${r.id}')" ondragstart="onRecipeDragStart(event, '${r.id}')" ondragend="onRecipeDragEnd(event)">
+      <div class="recipe-item ${r.id === activeId ? 'active' : ''}" onclick="selectRecipe('${r.id}')">
         <div class="recipe-item-num">№ ${String(i + 1).padStart(2, '0')}</div>
         <div class="recipe-item-title">${r.titlePlain}</div>
         <div class="recipe-item-meta">${r.servings} serves · ${r.time} min${r.calories ? ' · ' + r.calories + ' kcal' : ''}</div>
@@ -2551,8 +2104,8 @@
     if (!recipe) {
       main.innerHTML = `
         <div class="empty">
-          <div class="empty-mark">℘</div>
-          <p>Select a recipe, or add one.</p>
+          <div class="empty-mark"></div>
+          <p>Add a recipe to begin.</p>
         </div>
       `;
       return;
@@ -2562,7 +2115,7 @@
     const macros = calcMacroPercents(recipe);
 
     const tagHTML = (recipe.tags || []).map((t, i) => {
-      const cls = i === 0 ? '' : (i === 1 ? 'olive' : 'gold');
+      const cls = ['', 'rose', 'sage', 'gold'][i % 4];
       return `<span class="recipe-tag ${cls}">${t}</span>`;
     }).join('');
 
@@ -2632,7 +2185,7 @@
         <div class="recipe-header">
           <div class="recipe-actions">
             <button class="icon-btn cook-btn" onclick="enterCookMode('${recipe.id}')" title="Cook mode">▶</button>
-            <button class="icon-btn" onclick="editRecipe('${recipe.id}')" title="Edit">✎</button>
+            <button class="icon-btn edit-btn" onclick="editRecipe('${recipe.id}')" title="Edit">✎</button>
           </div>
           <div class="recipe-eyebrow">Recipe № ${String(recipes.findIndex(r => r.id === recipe.id) + 1).padStart(2, '0')}</div>
           <div class="recipe-tags">${tagHTML}</div>
@@ -2679,23 +2232,6 @@
           </section>
         </div>
 
-        ${(() => {
-          const list = buildShoppingList(recipe, scale);
-          if (!list || list.length === 0) return '';
-          return `
-          <div class="shopping">
-            <div class="shopping-label">Shopping list</div>
-            <ul class="shopping-list">
-              ${list.map(item => `
-                <li class="shopping-item">
-                  <span class="shopping-amount">${item.amount}</span>
-                  <span class="shopping-name">${item.name}</span>
-                </li>
-              `).join('')}
-            </ul>
-          </div>`;
-        })()}
-
         ${recipe.substitutes && recipe.substitutes.length > 0 ? `
           <div class="subs">
             <div class="subs-label">Swap it out</div>
@@ -2710,6 +2246,24 @@
             </div>
           </div>` : ''}
 
+        ${(() => {
+          const shopItems = buildRecipeShoppingList(recipe, scale);
+          if (shopItems.length === 0) return '';
+          return `
+            <div class="shopping">
+              <div class="shopping-label">Shopping list <span class="count">${shopItems.length} items</span></div>
+              <ul class="shopping-list">
+                ${shopItems.map(item => `
+                  <li>
+                    <span class="shop-amount">${item.amount || '·'}</span>
+                    <span class="shop-name">${item.name}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          `;
+        })()}
+
         ${recipe.notes ? `
           <div class="notes">
             <div class="notes-label">Notes from the cook</div>
@@ -2719,915 +2273,9 @@
     `;
   }
 
-  function onRecipeDragStart(event, recipeId) {
-    event.dataTransfer.setData('text/plain', recipeId);
-    event.dataTransfer.effectAllowed = 'copy';
-    event.currentTarget.classList.add('dragging');
-  }
-
-  function onRecipeDragEnd(event) {
-    event.currentTarget.classList.remove('dragging');
-  }
-
-  // === Planner ===
-  let currentView = 'recipes'; // 'recipes' | 'planner'
-  let plan = {}; // { 'mon-breakfast': [{ recipeId, portions }], ... }
-  const DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-  const DAY_LABELS = { mon: 'Mon', tue: 'Tue', wed: 'Wed', thu: 'Thu', fri: 'Fri', sat: 'Sat', sun: 'Sun' };
-  const SLOTS = ['breakfast', 'lunch', 'dinner'];
-  const SLOT_LABELS = { breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner' };
-
-  async function loadPlan() {
-    try {
-      const r = await storage.get('weekly-plan');
-      if (r && r.value) plan = JSON.parse(r.value);
-    } catch (e) { plan = {}; }
-  }
-  async function savePlan() {
-    try { await storage.set('weekly-plan', JSON.stringify(plan)); } catch (e) {}
-  }
-
-  function cellKey(day, slot) { return day + '-' + slot; }
-
-  function toggleView() {
-    currentView = currentView === 'recipes' ? 'planner' : 'recipes';
-    const btn = document.getElementById('viewToggle');
-    btn.textContent = currentView === 'recipes' ? 'Planner' : 'Recipes';
-    btn.classList.toggle('active', currentView === 'planner');
-    if (currentView === 'planner') renderPlanner();
-    else renderMain();
-  }
-
-  function recipeMacros(recipeId, portions) {
-    const r = recipes.find(x => x.id === recipeId);
-    if (!r) return { kcal: 0, p: 0, c: 0, f: 0 };
-    const scale = portions / r.servings;
-    return {
-      kcal: (r.calories || 0) * portions,
-      p: (r.protein || 0) * portions,
-      c: (r.carbs || 0) * portions,
-      f: (r.fat || 0) * portions
-    };
-  }
-
-  function dayTotals(day) {
-    const totals = { kcal: 0, p: 0, c: 0, f: 0 };
-    SLOTS.forEach(slot => {
-      const meals = plan[cellKey(day, slot)] || [];
-      meals.forEach(m => {
-        const t = recipeMacros(m.recipeId, m.portions);
-        totals.kcal += t.kcal;
-        totals.p += t.p;
-        totals.c += t.c;
-        totals.f += t.f;
-      });
-    });
-    return totals;
-  }
-
-  function weekTotals() {
-    const totals = { kcal: 0, p: 0, c: 0, f: 0 };
-    DAYS.forEach(d => {
-      const dt = dayTotals(d);
-      totals.kcal += dt.kcal;
-      totals.p += dt.p;
-      totals.c += dt.c;
-      totals.f += dt.f;
-    });
-    return totals;
-  }
-
-  function renderPlanner() {
-    const main = document.getElementById('main');
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    const wt = weekTotals();
-    const anyPlanned = Object.values(plan).some(arr => arr && arr.length > 0);
-
-    let gridHTML;
-    if (isMobile) {
-      // Mobile: one card per day, slots stacked inside
-      gridHTML = '<div class="planner-grid">' + DAYS.map(day => {
-        const dt = dayTotals(day);
-        const slotRows = SLOTS.map(slot => {
-          return '<div class="planner-slot-row">' +
-            '<div class="planner-slot-row-label">' + SLOT_LABELS[slot] + '</div>' +
-            renderCell(day, slot) +
-            '</div>';
-        }).join('');
-        return `
-          <div class="planner-day-card">
-            <div class="planner-day-card-header">
-              <span>${DAY_LABELS[day]}</span>
-              <span class="total-mini">${Math.round(dt.kcal)} kcal · ${Math.round(dt.p)}p / ${Math.round(dt.c)}c / ${Math.round(dt.f)}f</span>
-            </div>
-            ${slotRows}
-          </div>
-        `;
-      }).join('') + '</div>';
-    } else {
-      // Desktop: 7-day grid
-      const headerRow = '<div class="planner-corner"></div>' + DAYS.map(d =>
-        `<div class="planner-day-header">${DAY_LABELS[d]}</div>`
-      ).join('');
-
-      const slotRows = SLOTS.map(slot => {
-        return '<div class="planner-slot-label">' + SLOT_LABELS[slot] + '</div>' +
-          DAYS.map(day => renderCell(day, slot)).join('');
-      }).join('');
-
-      // Totals row
-      const totalsRow = '<div class="planner-slot-label" style="color:var(--ink);">Total</div>' +
-        DAYS.map(day => {
-          const dt = dayTotals(day);
-          if (dt.kcal === 0) return '<div class="planner-day-total">—</div>';
-          return `
-            <div class="planner-day-total">
-              <span class="planner-day-total-kcal">${Math.round(dt.kcal)}<small> kcal</small></span>
-              ${Math.round(dt.p)}p / ${Math.round(dt.c)}c / ${Math.round(dt.f)}f
-            </div>
-          `;
-        }).join('');
-
-      gridHTML = `<div class="planner-grid">${headerRow}${slotRows}${totalsRow}</div>`;
-    }
-
-    main.innerHTML = `
-      <div class="planner">
-        <div class="planner-header">
-          <div class="planner-title-block">
-            <div class="planner-eyebrow">Week ahead</div>
-            <h1 class="planner-title">Meal plan</h1>
-            <div class="planner-sub">Drag recipes from the sidebar onto a slot, or tap an empty slot on mobile.</div>
-          </div>
-          <div class="planner-actions">
-            <button class="planner-btn secondary" onclick="clearPlan()" ${!anyPlanned ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''}>Clear week</button>
-            <button class="planner-btn" onclick="openWeekShopping()" ${!anyPlanned ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''}>Shopping list</button>
-          </div>
-        </div>
-
-        ${gridHTML}
-
-        ${anyPlanned ? `
-          <div class="planner-week-total">
-            <div class="planner-week-total-label">Week total</div>
-            <div class="planner-week-total-item">
-              <span class="v">${Math.round(wt.kcal)}<small>kcal</small></span>
-              <div class="l">Calories</div>
-            </div>
-            <div class="planner-week-total-item">
-              <span class="v">${Math.round(wt.p)}<small>g</small></span>
-              <div class="l">Protein</div>
-            </div>
-            <div class="planner-week-total-item">
-              <span class="v">${Math.round(wt.c)}<small>g</small></span>
-              <div class="l">Carbs</div>
-            </div>
-            <div class="planner-week-total-item">
-              <span class="v">${Math.round(wt.f)}<small>g</small></span>
-              <div class="l">Fat</div>
-            </div>
-          </div>
-        ` : ''}
-      </div>
-    `;
-
-    attachCellDropHandlers();
-  }
-
-  function renderCell(day, slot) {
-    const key = cellKey(day, slot);
-    const meals = plan[key] || [];
-    const isEmpty = meals.length === 0;
-    const mealsHTML = meals.map((m, i) => {
-      const r = recipes.find(x => x.id === m.recipeId);
-      if (!r) return '';
-      return `
-        <div class="planner-meal">
-          <div class="planner-meal-title">${r.titlePlain}</div>
-          <div class="planner-meal-meta">
-            <button class="planner-meal-portions" onclick="changePortions('${key}', ${i}, event)">${m.portions} ${m.portions === 1 ? 'serving' : 'servings'}</button>
-            <span>${Math.round((r.calories || 0) * m.portions)} kcal</span>
-          </div>
-          <button class="planner-meal-remove" onclick="removeMeal('${key}', ${i}, event)" title="Remove">✕</button>
-        </div>
-      `;
-    }).join('');
-
-    return `<div class="planner-cell ${isEmpty ? 'empty' : ''}" data-key="${key}" onclick="onCellClick('${key}', event)">${mealsHTML}</div>`;
-  }
-
-  function attachCellDropHandlers() {
-    document.querySelectorAll('.planner-cell').forEach(cell => {
-      cell.addEventListener('dragover', e => {
-        e.preventDefault();
-        cell.classList.add('drag-over');
-      });
-      cell.addEventListener('dragleave', () => cell.classList.remove('drag-over'));
-      cell.addEventListener('drop', async e => {
-        e.preventDefault();
-        cell.classList.remove('drag-over');
-        const recipeId = e.dataTransfer.getData('text/plain');
-        if (!recipeId) return;
-        await addMealToCell(cell.dataset.key, recipeId);
-      });
-    });
-  }
-
-  async function addMealToCell(key, recipeId, portions) {
-    const r = recipes.find(x => x.id === recipeId);
-    if (!r) return;
-    const p = portions || Math.min(2, r.servings); // default 2 servings or whatever recipe makes
-    if (!plan[key]) plan[key] = [];
-    plan[key].push({ recipeId: recipeId, portions: p });
-    await savePlan();
-    renderPlanner();
-  }
-
-  async function removeMeal(key, idx, event) {
-    if (event) event.stopPropagation();
-    if (!plan[key]) return;
-    plan[key].splice(idx, 1);
-    if (plan[key].length === 0) delete plan[key];
-    await savePlan();
-    renderPlanner();
-  }
-
-  async function changePortions(key, idx, event) {
-    if (event) event.stopPropagation();
-    if (!plan[key] || !plan[key][idx]) return;
-    const current = plan[key][idx].portions;
-    const v = prompt('How many servings?', String(current));
-    if (v === null) return;
-    const n = parseFloat(v);
-    if (isNaN(n) || n <= 0) return;
-    plan[key][idx].portions = n;
-    await savePlan();
-    renderPlanner();
-  }
-
-  async function clearPlan() {
-    if (!confirm('Clear the entire week?')) return;
-    plan = {};
-    await savePlan();
-    renderPlanner();
-  }
-
-  // Cell click: open picker on mobile (no drag), or do nothing on desktop empty cell
-  let pickerTargetKey = null;
-  function onCellClick(key, event) {
-    // Only respond if the click is on the cell itself or its empty pseudo, not a child meal
-    if (event.target.closest('.planner-meal')) return;
-    if (event.target.closest('.planner-meal-portions')) return;
-    if (event.target.closest('.planner-meal-remove')) return;
-    pickerTargetKey = key;
-    openPicker();
-  }
-
-  function openPicker() {
-    const sub = document.getElementById('pickerSub');
-    if (pickerTargetKey) {
-      const [day, slot] = pickerTargetKey.split('-');
-      sub.textContent = DAY_LABELS[day] + ' · ' + SLOT_LABELS[slot];
-    }
-    const list = document.getElementById('pickerList');
-    list.innerHTML = recipes.map(r => `
-      <li class="picker-item" onclick="pickRecipe('${r.id}')">
-        <div class="picker-item-title">${r.titlePlain}</div>
-        <div class="picker-item-meta">${r.servings} serves · ${r.calories || '—'} kcal · ${(r.tags || []).slice(0, 2).join(', ')}</div>
-      </li>
-    `).join('');
-    document.getElementById('pickerModal').classList.add('show');
-  }
-
-  function closePicker() {
-    document.getElementById('pickerModal').classList.remove('show');
-    pickerTargetKey = null;
-  }
-
-  async function pickRecipe(recipeId) {
-    if (!pickerTargetKey) return;
-    await addMealToCell(pickerTargetKey, recipeId);
-    closePicker();
-  }
-
-  // Re-render planner on resize between mobile and desktop breakpoints
-  let lastMobile = window.matchMedia('(max-width: 768px)').matches;
-  window.addEventListener('resize', () => {
-    if (currentView !== 'planner') return;
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    if (isMobile !== lastMobile) {
-      lastMobile = isMobile;
-      renderPlanner();
-    }
-  });
-
-  // === Weekly shopping list ===
-  // Merges buildShoppingList output across all planned meals.
-  function buildWeekShoppingList() {
-    const map = {};
-    DAYS.forEach(day => {
-      SLOTS.forEach(slot => {
-        const meals = plan[cellKey(day, slot)] || [];
-        meals.forEach(m => {
-          const r = recipes.find(x => x.id === m.recipeId);
-          if (!r) return;
-          const scale = m.portions / r.servings;
-          const items = buildShoppingList(r, scale);
-          items.forEach(item => {
-            const parts = item.amount.split(' + ');
-            parts.forEach(p => {
-              const trimmed = p.trim();
-              if (trimmed === '—') return;
-              const numUnit = trimmed.match(/^([\d.]+)\s*(g|ml|tbsp|tsp|cup|cups|handful|handfuls)$/);
-              if (numUnit) {
-                const amt = parseFloat(numUnit[1]);
-                const unit = numUnit[2].replace(/s$/, '');
-                // Combine tsp into tbsp at the merge step (1 tbsp = 3 tsp)
-                if (unit === 'tsp') {
-                  const key = item.name + '|tbsp';
-                  if (!map[key]) map[key] = { name: item.name, amount: 0, unit: 'tbsp' };
-                  map[key].amount += amt / 3;
-                } else {
-                  const key = item.name + '|' + unit;
-                  if (!map[key]) map[key] = { name: item.name, amount: 0, unit: unit };
-                  map[key].amount += amt;
-                }
-              } else {
-                const n = parseInt(trimmed);
-                if (!isNaN(n)) {
-                  const key = item.name + '|whole';
-                  if (!map[key]) map[key] = { name: item.name, amount: 0, unit: 'whole' };
-                  map[key].amount += n;
-                }
-              }
-            });
-          });
-        });
-      });
-    });
-
-    // Merge "whole" and "g" entries for the same name where possible.
-    // Onions: assume 1 medium onion ≈ 150g.
-    const ONION_G = 150;
-    Object.keys(map).forEach(k => {
-      if (!k.endsWith('|whole')) return;
-      const name = k.slice(0, -6);
-      if (!/onion/.test(name.toLowerCase())) return;
-      const gKey = name + '|g';
-      if (map[gKey]) {
-        map[gKey].amount += map[k].amount * ONION_G;
-        delete map[k];
-      }
-    });
-
-    // Format
-    return Object.values(map).map(entry => {
-      let display;
-      if (entry.unit === 'g' || entry.unit === 'ml') {
-        display = roundGrams(entry.amount) + entry.unit;
-      } else if (entry.unit === 'tbsp') {
-        // If small, render as tsp; otherwise tbsp.
-        if (entry.amount < 1) {
-          const tsp = Math.max(0.5, Math.round(entry.amount * 3 * 2) / 2);
-          display = tsp + ' tsp';
-        } else {
-          const n = Math.round(entry.amount * 2) / 2;
-          display = n + ' tbsp';
-        }
-      } else if (entry.unit === 'cup') {
-        const n = Math.round(entry.amount * 4) / 4;
-        display = n + ' cup' + (n > 1 ? 's' : '');
-      } else if (entry.unit === 'handful') {
-        const n = Math.max(1, Math.round(entry.amount));
-        display = n + ' handful' + (n > 1 ? 's' : '');
-      } else {
-        display = String(Math.max(1, Math.ceil(entry.amount)));
-      }
-      return { amount: display, name: entry.name };
-    }).sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  function openWeekShopping() {
-    const list = buildWeekShoppingList();
-    const ul = document.getElementById('weekShoppingList');
-    if (list.length === 0) {
-      ul.innerHTML = '<li style="color:var(--ink-faded);justify-content:center;">No meals planned yet.</li>';
-    } else {
-      ul.innerHTML = list.map(i =>
-        '<li><span class="amt">' + i.amount + '</span><span class="nm">' + i.name + '</span></li>'
-      ).join('');
-    }
-    // Count meals for the subtitle
-    let mealCount = 0;
-    Object.values(plan).forEach(arr => mealCount += (arr || []).length);
-    document.getElementById('weekShoppingSub').textContent = mealCount + ' meal' + (mealCount === 1 ? '' : 's') + ' planned';
-    document.getElementById('weekShoppingModal').classList.add('show');
-  }
-
-  function closeWeekShopping() {
-    document.getElementById('weekShoppingModal').classList.remove('show');
-  }
-
-  async function copyWeekShopping() {
-    const list = buildWeekShoppingList();
-    if (list.length === 0) return;
-    const text = list.map(i => i.amount + '  ' + i.name).join('\n');
-    try {
-      await navigator.clipboard.writeText(text);
-      const btn = event.target;
-      const original = btn.textContent;
-      btn.textContent = 'Copied ✓';
-      setTimeout(() => { btn.textContent = original; }, 1500);
-    } catch (e) {
-      alert('Copy failed. Long-press the text to copy manually.');
-    }
-  }
-
   function countIngredients(recipe) {
     return recipe.ingredientGroups.reduce((sum, g) => sum + g.items.length, 0);
   }
-
-  // Build a consolidated shopping list from all ingredient groups.
-  // - Merges duplicate ingredients (sums grams, ml, tbsp, tsp by unit).
-  // - Converts measured citrus juice/zest into whole fruits (1 lemon = ~45ml juice).
-  // - Counts whole-item ingredients (garlic cloves, onions, eggs).
-  // - Filters out "to taste" / cosmetic items already implied (salt, pepper, water).
-  function buildShoppingList(recipe, scale) {
-    const items = []; // { key, displayName, amounts: { unit: number } }
-    const map = {};
-
-    function normalise(name) {
-      // Strip parenthetical notes and trailing qualifiers for grouping
-      return name
-        .toLowerCase()
-        .replace(/\([^)]*\)/g, '')
-        .replace(/,.*$/, '')
-        .replace(/\bfreshly\b|\btoasted\b|\bminced\b|\bgrated\b|\bcrumbled\b|\bsliced\b|\bdiced\b|\bchopped\b|\brinsed\b|\bcubed\b|\bquartered\b|\bhalved\b|\bthinly\b|\bfinely\b|\bdry\b|\bhot\b/g, '')
-        .replace(/\s+/g, ' ')
-        .trim();
-    }
-
-    function addItem(key, displayName, unit, amount) {
-      if (!map[key]) {
-        map[key] = { displayName, amounts: {} };
-        items.push(map[key]);
-      }
-      map[key].amounts[unit] = (map[key].amounts[unit] || 0) + amount;
-    }
-
-    recipe.ingredientGroups.forEach(g => {
-      g.items.forEach(item => {
-        const name = (item.name || '').trim();
-        if (!name) return;
-
-        const nameLower = name.toLowerCase();
-        const normalisedName = normalise(name);
-        const unit = (item.unit || '').toLowerCase();
-        const rawAmount = parseFloat(item.amount);
-        const amount = isNaN(rawAmount) ? 0 : rawAmount * scale;
-
-        // Skip water and seasoning-level items already in most kitchens
-        if (/^water$/.test(normalisedName)) return;
-        if (/^salt$/.test(normalisedName) || /^black pepper$/.test(normalisedName) || /^pepper$/.test(normalisedName)) return;
-
-        // Lemon juice / lemon zest / lemon wedge => whole lemons
-        // 1 medium lemon yields ~45ml juice and enough zest. A wedge = 1/4 lemon.
-        if (/lemon (juice|zest|wedge)|^lemon,? juiced|lemon,? to squeeze/.test(nameLower)) {
-          let lemonsNeeded = 0;
-          if (unit === 'ml') lemonsNeeded = amount / 45;
-          else if (unit === 'tbsp') lemonsNeeded = amount / 3; // ~3 tbsp per lemon
-          else if (unit === 'tsp') lemonsNeeded = amount / 9;
-          else if (/wedge/.test(nameLower)) lemonsNeeded = amount * 0.25;
-          else if (/zest/.test(nameLower)) lemonsNeeded = Math.max(amount, 1) * 0.5; // a zest = half a lemon's worth
-          else lemonsNeeded = amount; // "1 lemon, juiced"
-          addItem('lemon', 'lemons', 'whole', lemonsNeeded);
-          return;
-        }
-
-        // "half a lemon, juiced" or "1/2 lemon" — handled by item.amount as 0.5
-        if (/^lemon$/.test(normalisedName) || /^lemons?$/.test(normalisedName)) {
-          addItem('lemon', 'lemons', 'whole', amount || 1);
-          return;
-        }
-
-        // Garlic: minced garlic in tbsp vs whole garlic cloves
-        // 1 garlic clove ≈ 1 tsp minced. 1 tbsp minced = 3 cloves.
-        if (/garlic/.test(nameLower) && !/garlic powder/.test(nameLower)) {
-          let cloves = 0;
-          if (unit === 'tbsp') cloves = amount * 3;
-          else if (unit === 'tsp') cloves = amount;
-          else if (/clove/.test(nameLower) || unit === '' || !unit) cloves = amount;
-          else cloves = amount;
-          addItem('garlic', 'garlic cloves', 'whole', cloves);
-          return;
-        }
-
-        // Onions: combine red onion separate from yellow/white onion separate from spring
-        // Exclude onion powder which is a dried spice.
-        let onionKey = null;
-        if (/onion powder/.test(nameLower)) {
-          // Falls through to default handling as a spice
-        } else if (/red onion/.test(nameLower)) onionKey = 'red onions';
-        else if (/spring onion/.test(nameLower)) onionKey = 'spring onions';
-        else if (/yellow onion|white onion|brown onion|^onion/.test(nameLower)) onionKey = 'onions';
-        if (onionKey) {
-          if (unit === 'g') addItem(onionKey, onionKey, 'g', amount);
-          else addItem(onionKey, onionKey, 'whole', amount);
-          return;
-        }
-
-        // Default: group by normalised name and unit
-        const key = normalisedName + '|' + unit;
-        // Use the original first-seen display name, stripped of qualifiers
-        const display = name.replace(/\([^)]*\)/g, '').replace(/,.*$/, '').trim();
-        if (unit === 'handful') {
-          addItem(normalisedName, display, 'handful', amount || 1);
-        } else if (unit === 'g' || unit === 'ml' || unit === 'tbsp' || unit === 'tsp' || unit === 'cup' || unit === 'cups') {
-          addItem(normalisedName, display, unit, amount);
-        } else {
-          // No/unknown unit: treat as whole item count
-          addItem(normalisedName, display, 'whole', amount || 1);
-        }
-      });
-    });
-
-    // Format each item to a display string
-    return items.map(it => {
-      const parts = [];
-      const a = it.amounts;
-      let displayName = it.displayName;
-
-      if (a.g) parts.push(roundGrams(a.g) + 'g');
-      if (a.ml) parts.push(roundGrams(a.ml) + 'ml');
-      if (a.tbsp) {
-        const n = Math.round(a.tbsp * 2) / 2;
-        parts.push((Number.isInteger(n) ? n : n) + ' tbsp');
-      }
-      if (a.tsp) {
-        const n = Math.round(a.tsp * 2) / 2;
-        parts.push((Number.isInteger(n) ? n : n) + ' tsp');
-      }
-      if (a.cup) {
-        const n = Math.round(a.cup * 4) / 4;
-        parts.push(n + ' cup' + (n > 1 ? 's' : ''));
-      }
-      if (a.cups) {
-        const n = Math.round(a.cups * 4) / 4;
-        parts.push(n + ' cup' + (n > 1 ? 's' : ''));
-      }
-      if (a.handful) {
-        const n = Math.max(1, Math.round(a.handful));
-        parts.push(n + ' handful' + (n > 1 ? 's' : ''));
-      }
-      if (a.whole) {
-        const n = Math.max(1, Math.ceil(a.whole));
-        parts.push(n);
-      }
-
-      return {
-        amount: parts.join(' + ') || '—',
-        name: displayName
-      };
-    });
-  }
-
-  // === Inline timers ===
-  // Detect "30 minutes", "10 to 12 minutes", "1 hour 30 minutes", "90 sec", etc.
-  // Replaces matches in step body with a tappable button that opens a popover.
-  const TIMER_REGEX = /\b(\d+)(?:\s*(?:to|-|–)\s*(\d+))?\s*(hours?|hrs?|h|minutes?|mins?|m|seconds?|secs?|s)\b/gi;
-
-  function toSeconds(value, unit) {
-    const u = unit.toLowerCase();
-    if (/^h/.test(u)) return value * 3600;
-    if (/^m/.test(u) && !/^ms/.test(u)) return value * 60;
-    return value;
-  }
-
-  function injectTimers(text) {
-    return text.replace(TIMER_REGEX, function(match, a, b, unit) {
-      const targetVal = b ? parseInt(b) : parseInt(a);
-      const seconds = toSeconds(targetVal, unit);
-      if (seconds < 30) return match;
-      const safeLabel = match.replace(/"/g, '&quot;');
-      return '<button class="timer-btn" data-seconds="' + seconds + '" data-label="' + safeLabel + '" onclick="openTimerPopover(this, \'' + safeLabel + '\', ' + seconds + ')">' + match + '</button>';
-    });
-  }
-
-  // Active timers: id -> { intervalId, remaining, total, label, trayEl }
-  const activeTimers = {};
-  let timerCounter = 0;
-  let pendingTimer = null; // { sourceBtn, label }
-
-  function openTimerPopover(sourceBtn, label, defaultSeconds) {
-    pendingTimer = { sourceBtn: sourceBtn, label: label || 'Timer' };
-
-    document.getElementById('timerPopoverLabel').textContent = label ? ('Timer: ' + label) : 'Set timer';
-    const h = Math.floor(defaultSeconds / 3600);
-    const m = Math.floor((defaultSeconds % 3600) / 60);
-    const s = defaultSeconds % 60;
-    document.getElementById('timerH').value = h;
-    document.getElementById('timerM').value = m;
-    document.getElementById('timerS').value = s;
-
-    const pop = document.getElementById('timerPopover');
-    pop.classList.add('show');
-
-    // Position popover near the source button
-    const rect = sourceBtn.getBoundingClientRect();
-    const popRect = pop.getBoundingClientRect();
-    let top = rect.bottom + 8;
-    let left = rect.left;
-    if (left + popRect.width > window.innerWidth - 12) {
-      left = window.innerWidth - popRect.width - 12;
-    }
-    if (left < 12) left = 12;
-    if (top + popRect.height > window.innerHeight - 12) {
-      top = rect.top - popRect.height - 8;
-    }
-    pop.style.top = top + 'px';
-    pop.style.left = left + 'px';
-
-    setTimeout(() => {
-      const focusEl = m > 0 ? 'timerM' : (h > 0 ? 'timerH' : 'timerM');
-      const el = document.getElementById(focusEl);
-      el.focus();
-      el.select();
-    }, 50);
-  }
-
-  function closeTimerPopover() {
-    document.getElementById('timerPopover').classList.remove('show');
-    pendingTimer = null;
-  }
-
-  function confirmTimerStart() {
-    const h = parseInt(document.getElementById('timerH').value) || 0;
-    const m = parseInt(document.getElementById('timerM').value) || 0;
-    const s = parseInt(document.getElementById('timerS').value) || 0;
-    const total = h * 3600 + m * 60 + s;
-    if (total < 1) { closeTimerPopover(); return; }
-
-    const sourceBtn = pendingTimer ? pendingTimer.sourceBtn : null;
-    const label = pendingTimer ? pendingTimer.label : 'Timer';
-    startTimer(total, label, sourceBtn);
-    closeTimerPopover();
-  }
-
-  function startTimer(total, label, sourceBtn) {
-    const id = 't' + (++timerCounter);
-    let remaining = total;
-
-    // Build tray entry
-    const trayEl = document.createElement('div');
-    trayEl.className = 'timer-tray-item';
-    trayEl.dataset.timerId = id;
-    trayEl.innerHTML = '<span class="timer-tray-label">' + label + '</span><span class="timer-tray-time">' + formatTime(remaining) + '</span><button class="timer-tray-close" onclick="cancelTimer(\'' + id + '\', event)">✕</button>';
-    document.getElementById('timerTray').appendChild(trayEl);
-
-    if (sourceBtn) {
-      sourceBtn.classList.remove('done');
-      sourceBtn.classList.add('running');
-      sourceBtn.dataset.timerId = id;
-    }
-
-    function tick() {
-      remaining--;
-      if (remaining <= 0) {
-        clearInterval(activeTimers[id].intervalId);
-        const t = activeTimers[id];
-        if (t.trayEl) {
-          t.trayEl.classList.add('done');
-          t.trayEl.querySelector('.timer-tray-time').textContent = 'Done';
-        }
-        if (t.sourceBtn) {
-          t.sourceBtn.classList.remove('running');
-          t.sourceBtn.classList.add('done');
-          t.sourceBtn.innerHTML = 'Done';
-        }
-        timerFinished();
-        return;
-      }
-      trayEl.querySelector('.timer-tray-time').textContent = formatTime(remaining);
-      if (sourceBtn) sourceBtn.innerHTML = formatTime(remaining);
-    }
-
-    if (sourceBtn) sourceBtn.innerHTML = formatTime(remaining);
-
-    activeTimers[id] = {
-      intervalId: setInterval(tick, 1000),
-      sourceBtn: sourceBtn,
-      trayEl: trayEl,
-      total: total,
-      label: label
-    };
-
-    // Tap tray entry to dismiss when done
-    trayEl.addEventListener('click', function(e) {
-      if (e.target.classList.contains('timer-tray-close')) return;
-      if (trayEl.classList.contains('done')) cancelTimer(id);
-    });
-  }
-
-  function cancelTimer(id, event) {
-    if (event) event.stopPropagation();
-    const t = activeTimers[id];
-    if (!t) return;
-    clearInterval(t.intervalId);
-    if (t.trayEl && t.trayEl.parentNode) t.trayEl.parentNode.removeChild(t.trayEl);
-    if (t.sourceBtn) {
-      t.sourceBtn.classList.remove('running', 'done');
-      t.sourceBtn.innerHTML = t.sourceBtn.dataset.label || 'Timer';
-    }
-    delete activeTimers[id];
-  }
-
-  function formatTime(s) {
-    const h = Math.floor(s / 3600);
-    const m = Math.floor((s % 3600) / 60);
-    const sec = s % 60;
-    if (h > 0) return h + ':' + String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
-    return m + ':' + String(sec).padStart(2, '0');
-  }
-
-  // Audio context primed on first user interaction (iOS requirement)
-  let audioCtx = null;
-  let audioPrimed = false;
-  function primeAudio() {
-    if (audioPrimed) return;
-    try {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      // Play a silent buffer to unlock audio on iOS
-      const buffer = audioCtx.createBuffer(1, 1, 22050);
-      const source = audioCtx.createBufferSource();
-      source.buffer = buffer;
-      source.connect(audioCtx.destination);
-      source.start(0);
-      audioPrimed = true;
-    } catch (e) { console.error('Audio prime failed:', e); }
-  }
-  document.addEventListener('touchstart', primeAudio, { once: true, passive: true });
-  document.addEventListener('click', primeAudio, { once: true });
-  document.addEventListener('keydown', primeAudio, { once: true });
-
-  function playBeep(ctx, freq, startTime, duration, volume) {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.type = 'square'; // brasher, more alarm-like than sine
-    osc.frequency.setValueAtTime(freq, startTime);
-    gain.gain.setValueAtTime(0, startTime);
-    gain.gain.linearRampToValueAtTime(volume, startTime + 0.01);
-    gain.gain.setValueAtTime(volume, startTime + duration - 0.05);
-    gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-    osc.start(startTime);
-    osc.stop(startTime + duration);
-  }
-
-  function timerFinished() {
-    // Vibration (Android / some browsers only — iOS Safari ignores this silently)
-    try { if (navigator.vibrate) navigator.vibrate([400, 200, 400, 200, 400, 200, 600]); } catch (e) {}
-
-    // Visual flash so you notice when returning to the tab
-    document.body.style.transition = 'background-color 0.15s';
-    let flashes = 0;
-    const flashInterval = setInterval(() => {
-      document.body.style.backgroundColor = flashes % 2 === 0 ? 'var(--accent)' : '';
-      flashes++;
-      if (flashes >= 6) {
-        clearInterval(flashInterval);
-        document.body.style.backgroundColor = '';
-      }
-    }, 200);
-
-    // Audio: an alarm pattern, ~3 seconds total
-    try {
-      const ctx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-      // Resume context if it was suspended (common on iOS after backgrounding)
-      if (ctx.state === 'suspended') ctx.resume();
-
-      const now = ctx.currentTime;
-      const volume = 0.45;
-
-      // Three two-tone "ding-dong" pairs with gaps, like a kitchen timer alarm
-      const pattern = [
-        { freq: 1200, start: 0.00, dur: 0.18 },
-        { freq: 880,  start: 0.22, dur: 0.18 },
-        { freq: 1200, start: 0.55, dur: 0.18 },
-        { freq: 880,  start: 0.77, dur: 0.18 },
-        { freq: 1200, start: 1.10, dur: 0.18 },
-        { freq: 880,  start: 1.32, dur: 0.18 },
-        // Final longer tone
-        { freq: 1500, start: 1.75, dur: 0.50 }
-      ];
-      pattern.forEach(p => playBeep(ctx, p.freq, now + p.start, p.dur, volume));
-    } catch (e) { console.error('Audio playback failed:', e); }
-  }
-
-  // Close popover if clicking outside
-  document.addEventListener('click', function(e) {
-    const pop = document.getElementById('timerPopover');
-    if (!pop.classList.contains('show')) return;
-    if (pop.contains(e.target)) return;
-    if (e.target.classList && (e.target.classList.contains('timer-btn') || e.target.classList.contains('timer-start-btn'))) return;
-    closeTimerPopover();
-  });
-
-  // === Cook mode ===
-  let cookRecipe = null;
-  let cookStepIdx = 0;
-  let wakeLock = null;
-
-  function enterCookMode(id) {
-    cookRecipe = recipes.find(r => r.id === id);
-    if (!cookRecipe) return;
-    cookStepIdx = 0;
-    document.getElementById('cookTitle').textContent = cookRecipe.titlePlain;
-    document.getElementById('cookMode').classList.add('active');
-    renderCookStep();
-    document.addEventListener('keydown', cookKeyHandler);
-  }
-
-  function exitCookMode() {
-    document.getElementById('cookMode').classList.remove('active');
-    document.removeEventListener('keydown', cookKeyHandler);
-    releaseWakeLock();
-    // Timers keep running in the floating tray; don't cancel them.
-  }
-
-  function cookKeyHandler(e) {
-    if (e.key === 'Escape') exitCookMode();
-    else if (e.key === 'ArrowRight' || e.key === ' ') cookStepChange(1);
-    else if (e.key === 'ArrowLeft') cookStepChange(-1);
-  }
-
-  function cookStepChange(delta) {
-    const next = cookStepIdx + delta;
-    if (next < 0 || next >= cookRecipe.method.length) return;
-    cookStepIdx = next;
-    renderCookStep();
-  }
-
-  function renderCookStep() {
-    const step = cookRecipe.method[cookStepIdx];
-    const total = cookRecipe.method.length;
-    const stepEl = document.getElementById('cookStep');
-    stepEl.innerHTML = `
-      <div class="cook-step-meta">Step ${cookStepIdx + 1} of ${total}</div>
-      <div class="cook-step-title">${step.title}</div>
-      <div class="cook-step-body">${injectTimers(step.body)}</div>
-    `;
-    document.getElementById('cookProgressFill').style.width = (((cookStepIdx + 1) / total) * 100) + '%';
-    document.getElementById('cookCounter').textContent = (cookStepIdx + 1) + ' / ' + total;
-    document.getElementById('cookPrev').disabled = cookStepIdx === 0;
-    document.getElementById('cookNext').disabled = cookStepIdx === total - 1;
-    document.getElementById('cookNext').textContent = cookStepIdx === total - 1 ? 'Done ✓' : 'Next →';
-  }
-
-  // === Screen wake lock ===
-  async function toggleWakeLock() {
-    const btn = document.getElementById('cookWake');
-    if (wakeLock) {
-      releaseWakeLock();
-      return;
-    }
-    if (!('wakeLock' in navigator)) {
-      btn.title = 'Wake lock not supported on this device';
-      btn.style.opacity = '0.4';
-      setTimeout(() => { btn.style.opacity = ''; }, 1500);
-      return;
-    }
-    try {
-      wakeLock = await navigator.wakeLock.request('screen');
-      btn.classList.add('on');
-      wakeLock.addEventListener('release', () => {
-        wakeLock = null;
-        btn.classList.remove('on');
-      });
-    } catch (e) {
-      console.error('Wake lock failed:', e);
-    }
-  }
-
-  function releaseWakeLock() {
-    if (wakeLock) {
-      wakeLock.release().catch(() => {});
-      wakeLock = null;
-    }
-    document.getElementById('cookWake').classList.remove('on');
-  }
-
-  // Re-acquire wake lock when tab becomes visible again (iOS releases it on background)
-  document.addEventListener('visibilitychange', async () => {
-    if (document.visibilityState === 'visible' &&
-        document.getElementById('cookMode').classList.contains('active') &&
-        document.getElementById('cookWake').classList.contains('on') &&
-        !wakeLock && 'wakeLock' in navigator) {
-      try {
-        wakeLock = await navigator.wakeLock.request('screen');
-      } catch (e) {}
-    }
-  });
 
   function scaleAmount(amount, scale) {
     if (amount === '1' && scale === 1) return amount;
@@ -3654,7 +2302,6 @@
       let scaled = num * scale;
       let outUnit = unitLower;
 
-      // Convert kg to g and l to ml per project preferences
       if (unitLower === 'kg') { scaled *= 1000; outUnit = 'g'; }
       else if (unitLower === 'l') { scaled *= 1000; outUnit = 'ml'; }
 
@@ -3662,7 +2309,6 @@
       if (outUnit === 'g' || outUnit === 'ml') {
         display = roundGrams(scaled);
       } else {
-        // tbsp, tsp, cup - round to nearest quarter
         const rounded = Math.round(scaled * 4) / 4;
         display = Number.isInteger(rounded) ? String(rounded) : String(rounded);
       }
@@ -3675,12 +2321,14 @@
     activeId = id;
     const r = recipes.find(x => x.id === id);
     activeServings = r.servings;
+    // Auto-close sidebar on mobile so the recipe is visible
+    if (window.matchMedia && window.matchMedia('(max-width: 700px)').matches && !sidebarCollapsed) {
+      sidebarCollapsed = true;
+      applySidebarState();
+      saveSidebarState();
+    }
     renderSidebar();
     renderMain();
-    // Close mobile drawer when picking a recipe
-    document.getElementById('app').classList.remove('mobile-open');
-    // Scroll main back to top
-    document.getElementById('main').scrollTop = 0;
   }
 
   function changeServings(delta) {
@@ -3704,12 +2352,16 @@
     await saveSidebarState();
   });
 
-  // Mobile drawer wiring
-  document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-    document.getElementById('app').classList.toggle('mobile-open');
+  document.getElementById('mobileMenuBtn').addEventListener('click', async () => {
+    sidebarCollapsed = false;
+    applySidebarState();
+    await saveSidebarState();
   });
-  document.getElementById('mobileBackdrop').addEventListener('click', function() {
-    document.getElementById('app').classList.remove('mobile-open');
+
+  document.getElementById('mobileBackdrop').addEventListener('click', async () => {
+    sidebarCollapsed = true;
+    applySidebarState();
+    await saveSidebarState();
   });
 
   function applySidebarState() {
@@ -3767,10 +2419,26 @@
   async function deleteRecipe() {
     if (!editingId) return;
     if (!confirm('Delete this recipe?')) return;
+
+    const isSeed = SEED_RECIPES.some(s => s.id === editingId);
+
     recipes = recipes.filter(r => r.id !== editingId);
+
+    if (isSeed) {
+      let deletedSeeds = [];
+      try {
+        const result = await window.storage.get(DELETED_SEEDS_KEY);
+        if (result && result.value) deletedSeeds = JSON.parse(result.value);
+      } catch (e) {}
+      if (!deletedSeeds.includes(editingId)) {
+        deletedSeeds.push(editingId);
+        try { await window.storage.set(DELETED_SEEDS_KEY, JSON.stringify(deletedSeeds)); } catch (e) {}
+      }
+    }
+
     if (activeId === editingId) {
-      activeId = recipes[0] ? recipes[0].id : null;
-      activeServings = recipes[0] ? recipes[0].servings : 4;
+      activeId = recipes[0]?.id || null;
+      activeServings = recipes[0]?.servings || 4;
     }
     await saveAllRecipes();
     closeModal();
@@ -3884,50 +2552,435 @@
     renderMain();
   }
 
+  function displayNameForShopping(name) {
+    let out = '';
+    let depth = 0;
+    for (let i = 0; i < name.length; i++) {
+      const c = name[i];
+      if (c === '(') depth++;
+      else if (c === ')') depth--;
+      else if (c === ',' && depth === 0) break;
+      out += c;
+    }
+    return out.trim();
+  }
+
+  function normalizeForMatch(name) {
+    let n = name.toLowerCase().replace(/\([^)]*\)/g, '').split(',')[0].trim().replace(/\s+/g, ' ');
+    n = n.replace(/^(whole|fresh|ripe|large|small|medium|extra|hot|cold|dry|raw|cooked|the|hot)\s+/, '');
+    return n;
+  }
+
+  function buildRecipeShoppingList(recipe, scale) {
+    const citrusCounts = { lemon: 0, lime: 0, orange: 0 };
+    const citrusZestSeen = { lemon: false, lime: false, orange: false };
+    const items = new Map();
+
+    recipe.ingredientGroups.forEach(g => {
+      g.items.forEach(item => {
+        const nameLower = item.name.toLowerCase();
+        const num = parseFloat(item.amount);
+        const hasNum = !isNaN(num) && item.amount !== '';
+        const scaledAmount = hasNum ? num * scale : 0;
+
+        // Citrus handling: lemon, lime, orange
+        let citrus = null;
+        if (/\blemon/i.test(item.name)) citrus = 'lemon';
+        else if (/\blime/i.test(item.name)) citrus = 'lime';
+        else if (/\borange/i.test(item.name)) citrus = 'orange';
+
+        if (citrus) {
+          const isJuice = nameLower.includes('juice');
+          const isZest = nameLower.includes('zest');
+
+          if (isZest && !isJuice) {
+            // Track zest, contributes only at the end if no juice
+            citrusZestSeen[citrus] = true;
+          } else if (isJuice && item.unit === 'ml') {
+            const mlPerFruit = citrus === 'lemon' ? 30 : citrus === 'lime' ? 20 : 70;
+            citrusCounts[citrus] += scaledAmount / mlPerFruit;
+          } else if (isJuice && hasNum && !item.unit) {
+            citrusCounts[citrus] += scaledAmount;
+          } else if (!hasNum && isJuice) {
+            const match = item.name.match(/of\s+(\d+(?:\.\d+)?|\d+\/\d+)\s+/i);
+            if (match) {
+              let n;
+              if (match[1].includes('/')) {
+                const [a, b] = match[1].split('/');
+                n = parseFloat(a) / parseFloat(b);
+              } else {
+                n = parseFloat(match[1]);
+              }
+              citrusCounts[citrus] += n * scale;
+            } else {
+              citrusCounts[citrus] += scale;
+            }
+          } else if (hasNum) {
+            citrusCounts[citrus] += scaledAmount;
+          } else {
+            // Fallback like "Lemon wedges"
+            citrusCounts[citrus] += scale;
+          }
+          return;
+        }
+
+        // Non-citrus: combine by normalized name + unit
+        const cleanName = displayNameForShopping(item.name);
+        const norm = normalizeForMatch(item.name);
+        const key = `${norm}|${item.unit || ''}`;
+
+        if (!items.has(key)) {
+          items.set(key, {
+            displayName: cleanName,
+            unit: item.unit || '',
+            total: 0,
+            hasNum: false,
+            norm
+          });
+        }
+        const e = items.get(key);
+        if (hasNum) {
+          e.total += scaledAmount;
+          e.hasNum = true;
+        }
+      });
+    });
+
+    // Dedupe: drop no-amount entries when a numeric version of the same ingredient exists
+    const numericNorms = new Set();
+    items.forEach(v => { if (v.hasNum) numericNorms.add(v.norm); });
+    const toDelete = [];
+    items.forEach((v, k) => {
+      if (!v.hasNum && numericNorms.has(v.norm)) toDelete.push(k);
+    });
+    toDelete.forEach(k => items.delete(k));
+
+    const result = [];
+
+    ['lemon', 'lime', 'orange'].forEach(c => {
+      let count = citrusCounts[c];
+      // If only zest was mentioned (no juice or whole), assume 1 fruit
+      if (count === 0 && citrusZestSeen[c]) count = scale;
+      if (count > 0) {
+        const n = Math.ceil(count);
+        result.push({
+          amount: String(n),
+          name: n === 1 ? c : c + 's'
+        });
+      }
+    });
+
+    items.forEach(v => {
+      let amount = '';
+      if (v.hasNum && v.total > 0) {
+        if (v.unit === 'g' || v.unit === 'ml') {
+          amount = roundGrams(v.total) + v.unit;
+        } else if (['tbsp', 'tsp', 'cup', 'cups'].includes(v.unit)) {
+          const r = Math.round(v.total * 4) / 4;
+          amount = `${r} ${v.unit}`;
+        } else if (!v.unit) {
+          const r = Math.round(v.total * 2) / 2;
+          amount = String(r);
+        } else {
+          const r = Math.round(v.total * 10) / 10;
+          amount = `${Number.isInteger(r) ? r : r.toFixed(1)} ${v.unit}`;
+        }
+      }
+      result.push({ amount, name: v.displayName });
+    });
+
+    result.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    return result;
+  }
+
+  // === Inline timers ===
+  const TIMER_REGEX = /\b(\d+)(?:\s*(?:to|-|–)\s*(\d+))?\s*(hours?|hrs?|h|minutes?|mins?|m|seconds?|secs?|s)\b/gi;
+
+  function toSeconds(value, unit) {
+    const u = unit.toLowerCase();
+    if (/^h/.test(u)) return value * 3600;
+    if (/^m/.test(u) && !/^ms/.test(u)) return value * 60;
+    return value;
+  }
+
+  function injectTimers(text) {
+    return text.replace(TIMER_REGEX, function(match, a, b, unit) {
+      const targetVal = b ? parseInt(b) : parseInt(a);
+      const seconds = toSeconds(targetVal, unit);
+      if (seconds < 30) return match;
+      const safeLabel = match.replace(/"/g, '&quot;');
+      return '<button class="timer-btn" data-seconds="' + seconds + '" data-label="' + safeLabel + '" onclick="openTimerPopover(this, \'' + safeLabel + '\', ' + seconds + ')">' + match + '</button>';
+    });
+  }
+
+  const activeTimers = {};
+  let timerCounter = 0;
+  let pendingTimer = null;
+
+  function openTimerPopover(sourceBtn, label, defaultSeconds) {
+    pendingTimer = { sourceBtn: sourceBtn, label: label || 'Timer' };
+
+    document.getElementById('timerPopoverLabel').textContent = label ? ('Timer: ' + label) : 'Set timer';
+    const h = Math.floor(defaultSeconds / 3600);
+    const m = Math.floor((defaultSeconds % 3600) / 60);
+    const s = defaultSeconds % 60;
+    document.getElementById('timerH').value = h;
+    document.getElementById('timerM').value = m;
+    document.getElementById('timerS').value = s;
+
+    const pop = document.getElementById('timerPopover');
+    pop.classList.add('show');
+
+    const rect = sourceBtn.getBoundingClientRect();
+    const popRect = pop.getBoundingClientRect();
+    let top = rect.bottom + 8;
+    let left = rect.left;
+    if (left + popRect.width > window.innerWidth - 12) {
+      left = window.innerWidth - popRect.width - 12;
+    }
+    if (left < 12) left = 12;
+    if (top + popRect.height > window.innerHeight - 12) {
+      top = rect.top - popRect.height - 8;
+    }
+    pop.style.top = top + 'px';
+    pop.style.left = left + 'px';
+
+    setTimeout(() => {
+      const focusEl = m > 0 ? 'timerM' : (h > 0 ? 'timerH' : 'timerM');
+      const el = document.getElementById(focusEl);
+      el.focus();
+      el.select();
+    }, 50);
+  }
+
+  function closeTimerPopover() {
+    document.getElementById('timerPopover').classList.remove('show');
+    pendingTimer = null;
+  }
+
+  function confirmTimerStart() {
+    const h = parseInt(document.getElementById('timerH').value) || 0;
+    const m = parseInt(document.getElementById('timerM').value) || 0;
+    const s = parseInt(document.getElementById('timerS').value) || 0;
+    const total = h * 3600 + m * 60 + s;
+    if (total < 1) { closeTimerPopover(); return; }
+
+    const sourceBtn = pendingTimer ? pendingTimer.sourceBtn : null;
+    const label = pendingTimer ? pendingTimer.label : 'Timer';
+    startTimer(total, label, sourceBtn);
+    closeTimerPopover();
+  }
+
+  function startTimer(total, label, sourceBtn) {
+    const id = 't' + (++timerCounter);
+    let remaining = total;
+
+    const trayEl = document.createElement('div');
+    trayEl.className = 'timer-tray-item';
+    trayEl.dataset.timerId = id;
+    trayEl.innerHTML = '<span class="timer-tray-label">' + label + '</span><span class="timer-tray-time">' + formatTime(remaining) + '</span><button class="timer-tray-close" onclick="cancelTimer(\'' + id + '\', event)">✕</button>';
+    document.getElementById('timerTray').appendChild(trayEl);
+
+    if (sourceBtn) {
+      sourceBtn.classList.remove('done');
+      sourceBtn.classList.add('running');
+      sourceBtn.dataset.timerId = id;
+    }
+
+    function tick() {
+      remaining--;
+      if (remaining <= 0) {
+        clearInterval(activeTimers[id].intervalId);
+        const t = activeTimers[id];
+        if (t.trayEl) {
+          t.trayEl.classList.add('done');
+          t.trayEl.querySelector('.timer-tray-time').textContent = 'Done';
+        }
+        if (t.sourceBtn) {
+          t.sourceBtn.classList.remove('running');
+          t.sourceBtn.classList.add('done');
+          t.sourceBtn.innerHTML = 'Done';
+        }
+        timerFinished();
+        return;
+      }
+      trayEl.querySelector('.timer-tray-time').textContent = formatTime(remaining);
+      if (sourceBtn) sourceBtn.innerHTML = formatTime(remaining);
+    }
+
+    if (sourceBtn) sourceBtn.innerHTML = formatTime(remaining);
+
+    activeTimers[id] = {
+      intervalId: setInterval(tick, 1000),
+      sourceBtn: sourceBtn,
+      trayEl: trayEl,
+      total: total,
+      label: label
+    };
+
+    trayEl.addEventListener('click', function(e) {
+      if (e.target.classList.contains('timer-tray-close')) return;
+      if (trayEl.classList.contains('done')) cancelTimer(id);
+    });
+  }
+
+  function cancelTimer(id, event) {
+    if (event) event.stopPropagation();
+    const t = activeTimers[id];
+    if (!t) return;
+    clearInterval(t.intervalId);
+    if (t.trayEl && t.trayEl.parentNode) t.trayEl.parentNode.removeChild(t.trayEl);
+    if (t.sourceBtn) {
+      t.sourceBtn.classList.remove('running', 'done');
+      t.sourceBtn.innerHTML = t.sourceBtn.dataset.label || 'Timer';
+    }
+    delete activeTimers[id];
+  }
+
+  function formatTime(s) {
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sec = s % 60;
+    if (h > 0) return h + ':' + String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+    return m + ':' + String(sec).padStart(2, '0');
+  }
+
+  function timerFinished() {
+    try { if (navigator.vibrate) navigator.vibrate([300, 150, 300, 150, 300]); } catch (e) {}
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+      osc.start();
+      osc.stop(ctx.currentTime + 1.2);
+    } catch (e) {}
+  }
+
+  document.addEventListener('click', function(e) {
+    const pop = document.getElementById('timerPopover');
+    if (!pop.classList.contains('show')) return;
+    if (pop.contains(e.target)) return;
+    if (e.target.classList && (e.target.classList.contains('timer-btn') || e.target.classList.contains('timer-start-btn'))) return;
+    closeTimerPopover();
+  });
+
+  // === Cook mode ===
+  let cookRecipe = null;
+  let cookStepIdx = 0;
+  let wakeLock = null;
+
+  function enterCookMode(id) {
+    cookRecipe = recipes.find(r => r.id === id);
+    if (!cookRecipe) return;
+    cookStepIdx = 0;
+    document.getElementById('cookTitle').textContent = cookRecipe.titlePlain;
+    document.getElementById('cookMode').classList.add('active');
+    renderCookStep();
+    document.addEventListener('keydown', cookKeyHandler);
+  }
+
+  function exitCookMode() {
+    document.getElementById('cookMode').classList.remove('active');
+    document.removeEventListener('keydown', cookKeyHandler);
+    releaseWakeLock();
+  }
+
+  function cookKeyHandler(e) {
+    if (e.key === 'Escape') exitCookMode();
+    else if (e.key === 'ArrowRight' || e.key === ' ') cookStepChange(1);
+    else if (e.key === 'ArrowLeft') cookStepChange(-1);
+  }
+
+  function cookStepChange(delta) {
+    const next = cookStepIdx + delta;
+    if (next < 0 || next >= cookRecipe.method.length) return;
+    cookStepIdx = next;
+    renderCookStep();
+  }
+
+  function renderCookStep() {
+    const step = cookRecipe.method[cookStepIdx];
+    const total = cookRecipe.method.length;
+    const stepEl = document.getElementById('cookStep');
+    stepEl.innerHTML = `
+      <div class="cook-step-meta">Step ${cookStepIdx + 1} of ${total}</div>
+      <div class="cook-step-title">${step.title}</div>
+      <div class="cook-step-body">${injectTimers(step.body)}</div>
+    `;
+    document.getElementById('cookProgressFill').style.width = (((cookStepIdx + 1) / total) * 100) + '%';
+    document.getElementById('cookCounter').textContent = (cookStepIdx + 1) + ' / ' + total;
+    document.getElementById('cookPrev').disabled = cookStepIdx === 0;
+    document.getElementById('cookNext').disabled = cookStepIdx === total - 1;
+    document.getElementById('cookNext').textContent = cookStepIdx === total - 1 ? 'Done ✓' : 'Next →';
+  }
+
+  // === Screen wake lock ===
+  async function toggleWakeLock() {
+    const btn = document.getElementById('cookWake');
+    if (wakeLock) {
+      releaseWakeLock();
+      return;
+    }
+    if (!('wakeLock' in navigator)) {
+      btn.title = 'Wake lock not supported on this device';
+      btn.style.opacity = '0.4';
+      setTimeout(() => { btn.style.opacity = ''; }, 1500);
+      return;
+    }
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      btn.classList.add('on');
+      wakeLock.addEventListener('release', () => {
+        wakeLock = null;
+        btn.classList.remove('on');
+      });
+    } catch (e) {
+      console.error('Wake lock failed:', e);
+    }
+  }
+
+  function releaseWakeLock() {
+    if (wakeLock) {
+      wakeLock.release().catch(() => {});
+      wakeLock = null;
+    }
+    document.getElementById('cookWake').classList.remove('on');
+  }
+
+  document.addEventListener('visibilitychange', async () => {
+    if (document.visibilityState === 'visible' &&
+        document.getElementById('cookMode').classList.contains('active') &&
+        document.getElementById('cookWake').classList.contains('on') &&
+        !wakeLock && 'wakeLock' in navigator) {
+      try {
+        wakeLock = await navigator.wakeLock.request('screen');
+      } catch (e) {}
+    }
+  });
+
   function exportData() {
     const json = JSON.stringify(recipes, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'davids-dishes-recipes.json';
+    a.download = 'violeta-cooks-recipes.json';
     a.click();
     URL.revokeObjectURL(url);
   }
 
   (async function init() {
-    try {
-      recipes = SEED_RECIPES.slice();
-      activeId = recipes[0] ? recipes[0].id : null;
-      activeServings = recipes[0] ? recipes[0].servings : 4;
-
-      try {
-        var s = localStorage.getItem('sidebar-collapsed');
-        if (s) sidebarCollapsed = s === 'true';
-      } catch (e) {}
-      applySidebarState();
-
-      renderSidebar();
-      renderMain();
-
-      try {
-        await loadRecipes();
-        if (recipes && recipes.length > 0) {
-          if (!recipes.find(function(r){ return r.id === activeId; })) {
-            activeId = recipes[0].id;
-            activeServings = recipes[0].servings;
-          }
-          renderSidebar();
-          renderMain();
-        }
-        await loadPlan();
-      } catch (e) {
-        console.error('Storage load failed, using seeds:', e);
-      }
-    } catch (e) {
-      var el = document.getElementById('recipeList');
-      if (el) el.innerHTML = '<div style="padding:30px 22px;color:#c5462a;font-size:12px;">Init error: ' + e.message + '</div>';
-    }
+    await loadSidebarState();
+    applySidebarState();
+    await loadRecipes();
+    activeId = recipes[0]?.id || null;
+    activeServings = recipes[0]?.servings || 4;
+    renderSidebar();
+    renderMain();
   })();
 </script>
 
