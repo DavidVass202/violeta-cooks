@@ -157,9 +157,17 @@
     margin-top: 4px;
   }
 
-  .search {
+  .search-row {
     padding: 14px 22px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .search {
+    flex: 1;
     position: relative;
+    min-width: 0;
   }
 
   .search input {
@@ -181,10 +189,16 @@
   .search::before {
     content: '⌕';
     position: absolute;
-    left: 22px;
-    top: 17px;
+    left: 0;
+    top: 5px;
     color: var(--ink-faded);
     font-size: 16px;
+  }
+
+  .search-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
   }
 
   .tags {
@@ -263,26 +277,23 @@
     letter-spacing: 0.04em;
   }
 
-  .sidebar-footer {
-    padding: 14px 22px;
-    border-top: 1px solid var(--line);
-    display: flex;
-    gap: 6px;
-  }
-
   .btn-add {
-    flex: 1;
     background: var(--accent);
     color: white;
     border: none;
-    padding: 9px;
+    width: 28px;
+    height: 28px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
     transition: background 0.2s;
-    border-radius: 2px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
   }
 
   .btn-add:hover { background: var(--accent-deep); }
@@ -291,14 +302,18 @@
     background: transparent;
     color: var(--ink-soft);
     border: 1px solid var(--line);
-    padding: 9px 12px;
+    width: 28px;
+    height: 28px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-size: 13px;
     cursor: pointer;
     transition: all 0.2s;
-    border-radius: 2px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
   }
 
   .btn-export:hover {
@@ -931,28 +946,53 @@
 
   .recipe-actions {
     position: absolute;
-    top: 0;
+    top: 36px;
     right: 0;
     display: flex;
     gap: 8px;
+    z-index: 2;
   }
 
   .icon-btn {
-    background: transparent;
+    background: var(--bg-card);
     border: 1px solid var(--line);
     color: var(--ink-soft);
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 13px;
     transition: all 0.2s;
   }
 
   .icon-btn:hover { border-color: var(--accent); color: var(--accent-deep); }
+
+  .icon-btn.cook-btn {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    font-size: 11px;
+    padding-left: 2px;
+  }
+
+  .icon-btn.cook-btn:hover {
+    background: var(--accent-deep);
+    border-color: var(--accent-deep);
+  }
+
+  .icon-btn.edit-btn {
+    background: var(--rose);
+    border-color: var(--rose);
+    color: white;
+  }
+
+  .icon-btn.edit-btn:hover {
+    background: #b8869f;
+    border-color: #b8869f;
+  }
 
   .loading {
     padding: 40px;
@@ -1507,19 +1547,20 @@
         <div class="brand-sub">a working collection</div>
       </div>
 
-      <div class="search">
-        <input type="text" id="searchInput" placeholder="Search...">
+      <div class="search-row">
+        <div class="search">
+          <input type="text" id="searchInput" placeholder="Search...">
+        </div>
+        <div class="search-actions">
+          <button class="btn-add" onclick="openModal()" title="New recipe">+</button>
+          <button class="btn-export" onclick="exportData()" title="Export all">↓</button>
+        </div>
       </div>
 
       <div class="tags" id="tagFilters"></div>
 
       <div class="recipe-list" id="recipeList">
         <div class="loading">Loading...</div>
-      </div>
-
-      <div class="sidebar-footer">
-        <button class="btn-add" onclick="openModal()">+ New</button>
-        <button class="btn-export" onclick="exportData()" title="Export all">↓</button>
       </div>
     </div>
   </aside>
@@ -2143,8 +2184,8 @@
       <article class="recipe">
         <div class="recipe-header">
           <div class="recipe-actions">
-            <button class="icon-btn" onclick="enterCookMode('${recipe.id}')" title="Cook mode">▶</button>
-            <button class="icon-btn" onclick="editRecipe('${recipe.id}')" title="Edit">✎</button>
+            <button class="icon-btn cook-btn" onclick="enterCookMode('${recipe.id}')" title="Cook mode">▶</button>
+            <button class="icon-btn edit-btn" onclick="editRecipe('${recipe.id}')" title="Edit">✎</button>
           </div>
           <div class="recipe-eyebrow">Recipe № ${String(recipes.findIndex(r => r.id === recipe.id) + 1).padStart(2, '0')}</div>
           <div class="recipe-tags">${tagHTML}</div>
